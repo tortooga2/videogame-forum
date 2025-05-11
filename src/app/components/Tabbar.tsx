@@ -10,7 +10,7 @@ export default function Tabbar({ onTabChange }: { onTabChange: (tab: string) => 
                     <button
                         key={tab}
                         onClick={() => onTabChange(tab)}
-                        className="text-[#f1f1f1] hover:text-[#00ffe7] hover:underline transition duration-150"
+                        className="text-[#f1f1f1] border-b-4 border-transparent hover:border-cyan-600 transition duration-200 pb-1"
                     >
                         {tab}
                     </button>

@@ -44,9 +44,7 @@ export async function GET(req: NextRequest) {
             },
             { status: 200 }
         );
-    }
-
-    if (postType === "answer") {
+    } else if (postType === "answer") {
         const { upVoteCount, downVoteCount } = await getAnswerVoteCount(postId);
         let hasVoted;
         if (userId) {
@@ -58,6 +56,11 @@ export async function GET(req: NextRequest) {
                 upvotes: upVoteCount,
                 downvotes: downVoteCount,
             },
+            { status: 200 }
+        );
+    } else {
+        return NextResponse.json(
+            { message: "invalid post type" },
             { status: 200 }
         );
     }
