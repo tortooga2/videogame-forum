@@ -94,7 +94,16 @@ export async function POST(req: NextRequest) {
     if (postType === "question") {
         const { upVoteCount, downVoteCount, hasVoted } =
             await updateQuestionVote(postId, userId, voteType);
-        if (!hasVoted || !upVoteCount || !downVoteCount) {
+        console.log(
+            "upVoteCount: ",
+            upVoteCount,
+            "downVoteCount: ",
+            downVoteCount,
+            "hasVoted: ",
+            hasVoted
+        );
+
+        if (!(upVoteCount || downVoteCount || hasVoted)) {
             return NextResponse.json(
                 {
                     message: "failed to update vote",

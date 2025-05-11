@@ -68,9 +68,10 @@ export default function VoteArea({
                     );
                     if (response.ok) {
                         const data = await response.json();
+                        console.log(data);
                         setCounts({
-                            upvotes: data.upvotes,
-                            downvotes: data.downvotes,
+                            upvotes: data.upVoteCount,
+                            downvotes: data.downVoteCount,
                         });
                     }
                 }}
@@ -103,9 +104,10 @@ export default function VoteArea({
                     );
                     if (response.ok) {
                         const data = await response.json();
+                        console.log(data);
                         setCounts({
-                            upvotes: data.upvotes,
-                            downvotes: data.downvotes,
+                            upvotes: data.upVoteCount,
+                            downvotes: data.downVoteCount,
                         });
                     }
                 }}
