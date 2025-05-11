@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 export default function VoteArea({ postId, postType }) {
     const [counts, setCounts] = useState({ upvotes: 0, downvotes: 0 });
-    const [hasVoted, setHasVoted] = useState("none");
 
     const getVotes = async () => {
         const response = await fetch(
@@ -24,7 +23,6 @@ export default function VoteArea({ postId, postType }) {
                 upvotes: data.upvotes,
                 downvotes: data.downvotes,
             });
-            setHasVoted(data.hasVoted);
         }
     };
 
@@ -63,7 +61,11 @@ export default function VoteArea({ postId, postType }) {
                         }
                     );
                     if (response.ok) {
-                        getVotes();
+                        const data = await response.json();
+                        setCounts({
+                            upvotes: data.upvotes,
+                            downvotes: data.downvotes,
+                        });
                     }
                 }}
             >
@@ -94,7 +96,11 @@ export default function VoteArea({ postId, postType }) {
                         }
                     );
                     if (response.ok) {
-                        getVotes();
+                        const data = await response.json();
+                        setCounts({
+                            upvotes: data.upvotes,
+                            downvotes: data.downvotes,
+                        });
                     }
                 }}
             >
