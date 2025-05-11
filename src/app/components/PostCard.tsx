@@ -9,8 +9,8 @@ type PostCardProps = {
     title: string;
     description: string;
     createdAt: string | Date;
-    upvotes: number;
-    downvotes: number;
+    // upvotes: number;
+    // downvotes: number;
 };
 
 export default function PostCard({
@@ -19,8 +19,8 @@ export default function PostCard({
     title,
     description,
     createdAt,
-    upvotes,
-    downvotes,
+    // upvotes,
+    // downvotes,
 }: PostCardProps) {
     return (
         <div className="bg-[#1a1c2c] border border-gray-600 rounded-md p-4 flex flex-col gap-3 hover:shadow-md transition">
@@ -35,11 +35,11 @@ export default function PostCard({
                 <p className="text-white">{description}</p>
             </Link>
 
-            <div className="flex gap-4 items-center text-sm">
+            {/* <div className="flex gap-4 items-center text-sm">
                 <button className="hover:text-green-300">⬆ {upvotes}</button>
                 <span className="text-gray-400">|</span>
                 <button className="hover:text-red-300">⬇ {downvotes}</button>
-            </div>
+            </div> */}
         </div>
     );
 }

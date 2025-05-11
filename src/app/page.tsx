@@ -74,8 +74,8 @@ export default async function Home() {
                                 title={q.title}
                                 description={q.description}
                                 createdAt={q.createdAt}
-                                upvotes={q.upvotes}
-                                downvotes={q.downvotes}
+                                // upvotes={q.upvotes}
+                                // downvotes={q.downvotes}
                             />
                         ))}
                     </div>
