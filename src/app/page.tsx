@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { signOut } from "@/lib/auth";
-import createPost from "@/lib/backendFunction/createPost";
-import getPosts from "@/lib/backendFunction/getPosts";
+import createPost from "@/lib/backendFunction/createQuestion";
+import getPosts from "@/lib/backendFunction/getQuestion";
 
 export default async function Home() {
     const session = await auth();
