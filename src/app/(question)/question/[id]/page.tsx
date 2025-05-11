@@ -3,10 +3,12 @@ import prisma from "@/lib/prisma";
 import VoteArea from "@/components/voteArea";
 
 export default async function QuestionPage({
-    params: { id },
+    params,
 }: {
-    params: { id: string };
+    // params must be a Promise of your params shape
+    params: Promise<{ id: string }>;
 }) {
+    const { id } = await params;
     if (!id) {
         return <div>404 not found</div>;
     }
