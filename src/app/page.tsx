@@ -21,7 +21,7 @@ export default async function Home() {
         <div className="w-full min-h-screen" style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}>
 
 
-            <Navbar user={session.user?.email} />
+            <Navbar user={session.user?.email ?? "Guest"} />
             <Tabbar />
 
             {/* Main Grid */}
