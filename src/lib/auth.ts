@@ -9,6 +9,8 @@ import { CredentialSchema } from "@/lib/schema/schema";
 import { comparePassword } from "./passwordScripts";
 import { v4 as uuid } from "uuid";
 
+import { encode as defaultEncode } from "next-auth/jwt";
+
 const adapter = PrismaAdapter(prisma);
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -70,7 +72,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 const sessionToken = uuid();
 
                 if (!params.token.sub) {
-                    return null;
+                    throw new Error("Failed to create session");
                 }
 
                 const createdSession = await adapter?.createSession?.({
@@ -80,11 +82,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 });
 
                 if (!createdSession) {
-                    return null;
+                    throw new Error("Failed to create session");
                 }
                 return sessionToken;
             }
-            return encode(params);
+            return defaultEncode(params);
         },
     },
 });

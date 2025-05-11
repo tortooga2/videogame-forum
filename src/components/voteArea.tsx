@@ -1,7 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function VoteArea({ postId, postType }) {
+export default function VoteArea({
+    postId,
+    postType,
+}: {
+    postId: string;
+    postType: string;
+}) {
     const [counts, setCounts] = useState({ upvotes: 0, downvotes: 0 });
 
     const getVotes = async () => {

@@ -55,7 +55,7 @@ export const getQuestionVoteCount = async (questionId: string) => {
         },
     });
 
-    if (!question?.upvotes && !question?.downvotes) {
+    if (!question) {
         return {
             upVoteCount: 0,
             downVoteCount: 0,
@@ -138,8 +138,9 @@ export async function updateQuestionVote(
     });
     if (!Question) {
         return {
-            message: "question not found",
-            status: 404,
+            upVoteCount: null,
+            downVoteCount: null,
+            hasVoted: null,
         };
     }
 
@@ -185,8 +186,9 @@ export async function updateQuestionVote(
         } else {
             if (vote.vote === voteType) {
                 return {
-                    message: "already voted",
-                    status: 200,
+                    upVoteCount: Question.upvotes,
+                    downVoteCount: Question.downvotes,
+                    hasVoted: vote.vote,
                 };
             }
             const newVote = await prisma.questionVote.update({
@@ -276,9 +278,9 @@ export async function updateQuestionVote(
         }
     }
 
-    const { upVoteCount, downVoteCount } = await getQuestionVoteCount(
-        questionId
-    );
+    const result = await getQuestionVoteCount(questionId);
+    const upVoteCount = result.upVoteCount;
+    const downVoteCount = result.downVoteCount;
 
     return { upVoteCount, downVoteCount, ...(hasVoted ? { hasVoted } : {}) };
 }
