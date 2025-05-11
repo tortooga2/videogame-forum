@@ -1,11 +1,9 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import createPost from "@/lib/backendFunction/createQuestion";
-import getPosts from "@/lib/backendFunction/getQuestion";
+import getPosts from "@/lib/backendFunction/getAllQuestion";
 import Navbar from "./components/Navbar";
-import Link from "next/link";
-import Tabbar from "./components/Tabbar";
-import PostCard from "./components/PostCard";
+import AdBlock from "./components/Ad";
 import GameNewsCarousel from "./components/GameNewsCarousel";
 import getTopUsersThisWeek from "@/lib/backendFunction/getTopUsers";
 import PostFeed from "./components/PostFeed";
@@ -73,7 +71,7 @@ export default async function Home() {
                         <GameNewsCarousel />
                     
 
-                    <div className="bg-[#1a1c2c] text-white rounded-md shadow-md p-4 h-auto">
+                    <div className="bg-[#1a1c2c] border border-gray-600 text-white rounded-md shadow-md p-4 h-auto">
                         <h2 className="text-lg font-bold mb-2">🏆 Top Users This Week</h2>
                         <ul className="list-disc list-inside text-sm">
                             {topUsers.map((user) => (
@@ -83,6 +81,12 @@ export default async function Home() {
                             ))}
                         </ul>
                     </div>
+
+                    <AdBlock />
+
+
+                    
+
 
 
                 </div>

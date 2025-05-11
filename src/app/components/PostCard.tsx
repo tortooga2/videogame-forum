@@ -10,8 +10,8 @@ type PostCardProps = {
     title: string;
     description: string;
     createdAt: string | Date;
-    // upvotes: number;
-    // downvotes: number;
+    answerCount: number;
+  
 };
 
 export default function PostCard({
@@ -20,8 +20,7 @@ export default function PostCard({
     title,
     description,
     createdAt,
-    // upvotes,
-    // downvotes,
+    answerCount,
 }: PostCardProps) {
     return (
         <div className="bg-[#1a1c2c] border border-gray-600 rounded-md p-4 flex flex-col gap-3 hover:shadow-md transition">
@@ -34,6 +33,8 @@ export default function PostCard({
                     Created at: {new Date(createdAt).toLocaleString()}
                 </p>
                 <p className="text-white">{description}</p>
+                <p className="text-sm text-[#bf5af2] mt-2">{answerCount} {answerCount === 1 ? "reply" : "replies"}</p>
+
             </Link>
 
             <div className="flex gap-4 items-center text-sm">

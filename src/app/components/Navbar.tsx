@@ -11,7 +11,7 @@ export default function Navbar({ user }: { user: string }) {
     return (
         <nav className="w-full dark:bg-[#1b1a2d] text-white px-6 py-4 shadow-md relative z-10">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="text-xl font-bold">🎮 GameForum</div>
+                <div className="text-xl font-bold">🎮 Tilted Towers Talk</div>
 
                 <input
                     type="text"
@@ -33,7 +33,7 @@ export default function Navbar({ user }: { user: string }) {
 
                     {/* Dropdown Menu */}
                     {menuOpen && (
-                        <div className="absolute right-0 top-12 bg-gray-200 dark:bg-[#2a2942] text-white rounded shadow-md w-40">
+                        <div className="absolute right-0 top-12 bg-gray-600 dark:bg-[#2a2942] text-white rounded shadow-md w-40">
                             <button
                                 onClick={() => {
                                     if (confirm("Are you sure you want to sign out?")) {

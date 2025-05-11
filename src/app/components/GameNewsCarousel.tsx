@@ -20,6 +20,11 @@ const news = [
         link: "#",
         image: "/eldenring.png",
     },
+    {
+        title: " 😬 Will Fallout 5 Come Out Before Elder Scrolls 6?",
+        link: "#",
+        image: "/fallout5.jpg",
+    },
 ];
 
 export default function GameNewsCarousel() {
@@ -34,7 +39,7 @@ export default function GameNewsCarousel() {
     };
 
     return (
-        <div className="bg-[#1a1c2c] text-white rounded-md shadow-md p-4">
+        <div className="bg-[#1a1c2c] border border-gray-600 text-white rounded-md shadow-md p-4">
             <h2 className="text-lg font-bold flex items-center gap-2 mb-2">
                 <FaNewspaper className="text-yellow-400" />
                 Game News
@@ -47,7 +52,7 @@ export default function GameNewsCarousel() {
                             alt={item.title}
                             width={800}
                             height={300}
-                            className="w-full h-60 rounded-md object-contain h-auto"
+                            className="w-full h-60 rounded-md object-contain h-auto bg-no-repeat bg-center"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-4 rounded-b-md">
                             <a href={item.link} className="hover:underline">
