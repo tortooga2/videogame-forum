@@ -29,7 +29,8 @@ export default function VoteArea({
                     padding: "0.5rem",
                     borderRadius: "0.5rem",
                     border: "1px solid white",
-                    backgroundColor: hasVoted === "upvote" ? "red" : "none",
+                    backgroundColor:
+                        hasVoted === "upvote" ? "red" : "#ffffff00",
                 }}
                 onClick={async (e) => {
                     handleVote(
@@ -51,7 +52,8 @@ export default function VoteArea({
                     borderRadius: "0.5rem",
                     border: "1px solid white",
                     transform: "rotate(180deg)",
-                    backgroundColor: hasVoted === "downvote" ? "blue" : "none",
+                    backgroundColor:
+                        hasVoted === "downvote" ? "blue" : "#ffffff00",
                 }}
                 onClick={async (e) => {
                     handleVote(
