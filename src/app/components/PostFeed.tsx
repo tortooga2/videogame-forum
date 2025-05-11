@@ -4,20 +4,16 @@ import { useState } from "react";
 import PostCard from "./PostCard";
 import Tabbar from "./Tabbar";
 
-type Post = {
-    id: string;
-    userId: string;
-    title: string;
-    description: string;
-    createdAt: string;
-    upvotes?: number;
-    downvotes?: number;
-};
+import { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion";
 
-export default function PostFeed({ questions }: { questions: Post[] }) {
+export default function PostFeed({
+    questions,
+}: {
+    questions: QuestionWithRelations[];
+}) {
     const [activeTab, setActiveTab] = useState("Latest");
 
-    const sortedQuestions = [...questions];
+    const sortedQuestions = [...questions] as QuestionWithRelations[];
 
     if (activeTab === "Popular this Week") {
         sortedQuestions.sort((a, b) => {
@@ -33,15 +29,7 @@ export default function PostFeed({ questions }: { questions: Post[] }) {
             <h1 className="text-2xl font-bold text-white">Posts</h1>
             <div className="flex flex-col gap-4">
                 {sortedQuestions.map((q) => (
-                    <PostCard
-                        key={q.id}
-                        id={q.id}
-                        userId={q.userId}
-                        title={q.title}
-                        description={q.description}
-                        createdAt={q.createdAt}
-                        answerCount={q._count?.answers || 0}
-                    />
+                    <PostCard key={q.id} question={q} />
                 ))}
             </div>
         </>
