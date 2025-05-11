@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { signOut } from "@/lib/auth";
 import createPost from "@/lib/backendFunction/createQuestion";
-import getPosts from "@/lib/backendFunction/getQuestion";
+import getAllQuestions from "@/lib/backendFunction/getAllQuestion";
 
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ export default async function Home() {
     const session = await auth();
     if (!session) redirect("/sign-in");
 
-    const questions = await getPosts();
+    const questions = await getAllQuestions();
 
     return (
         <div
