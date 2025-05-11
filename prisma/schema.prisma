@@ -98,6 +98,8 @@ model Question {
   title  String?
   description String?
 
+  tagid      String  @default("0")
+
   upvotes   Int      @default(0)
   downvotes Int      @default(0)
 
@@ -109,6 +111,7 @@ model Question {
   answers   Answer[]
 
   poster    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagid], references: [id], onDelete: Cascade)
 }
 
 model Answer {
@@ -155,5 +158,18 @@ model QuestionVote {
   voter     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   question  Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
+}
+
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  color     String @default("#ffffff")
+  description String?
+
+  questions Question[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
