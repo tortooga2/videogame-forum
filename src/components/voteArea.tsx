@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { handleVote, getVotes } from "@/lib/frontendFunctions/handleVote";
 
 export default function VoteArea({
     postId,
@@ -10,30 +11,8 @@ export default function VoteArea({
 }) {
     const [counts, setCounts] = useState({ upvotes: 0, downvotes: 0 });
 
-    const getVotes = async () => {
-        const response = await fetch(
-            `/api/vote/count?postType=${encodeURIComponent(
-                postType
-            )}&postId=${encodeURIComponent(postId)}`,
-            {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-        const data = await response.json();
-        if (response.ok) {
-            setCounts({
-                upvotes: data.upvotes,
-                downvotes: data.downvotes,
-            });
-        }
-    };
-
     useEffect(() => {
-        getVotes();
+        getVotes(postType, postId, setCounts);
     }, []);
 
     return (
@@ -51,29 +30,7 @@ export default function VoteArea({
                     border: "1px solid white",
                 }}
                 onClick={async (e) => {
-                    e.stopPropagation();
-                    const response = await fetch(
-                        `/api/vote/count/?postId=${encodeURIComponent(
-                            postId
-                        )}&postType=${encodeURIComponent(
-                            "question"
-                        )}&voteType=upvote`,
-                        {
-                            method: "POST",
-                            credentials: "include",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                        }
-                    );
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log(data);
-                        setCounts({
-                            upvotes: data.upVoteCount,
-                            downvotes: data.downVoteCount,
-                        });
-                    }
+                    handleVote(e, "upvote", postType, postId, setCounts);
                 }}
             >
                 ^
@@ -87,29 +44,7 @@ export default function VoteArea({
                     transform: "rotate(180deg)",
                 }}
                 onClick={async (e) => {
-                    e.stopPropagation();
-                    const response = await fetch(
-                        `/api/vote/count/?postId=${encodeURIComponent(
-                            postId
-                        )}&postType=${encodeURIComponent(
-                            "question"
-                        )}&voteType=downvote`,
-                        {
-                            method: "POST",
-                            credentials: "include",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                        }
-                    );
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log(data);
-                        setCounts({
-                            upvotes: data.upVoteCount,
-                            downvotes: data.downVoteCount,
-                        });
-                    }
+                    handleVote(e, "downvote", postType, postId, setCounts);
                 }}
             >
                 ^
