@@ -1,0 +1,105 @@
+"use client";
+import { useEffect, useState } from "react";
+
+export default function VoteArea({ postId, postType }) {
+    const [counts, setCounts] = useState({ upvotes: 0, downvotes: 0 });
+    const [hasVoted, setHasVoted] = useState("none");
+
+    const getVotes = async () => {
+        const response = await fetch(
+            `/api/vote/count?postType=${encodeURIComponent(
+                postType
+            )}&postId=${encodeURIComponent(postId)}`,
+            {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        const data = await response.json();
+        if (response.ok) {
+            setCounts({
+                upvotes: data.upvotes,
+                downvotes: data.downvotes,
+            });
+            setHasVoted(data.hasVoted);
+        }
+    };
+
+    useEffect(() => {
+        getVotes();
+    }, []);
+
+    return (
+        <div
+            style={{
+                display: "flex",
+                gap: "1rem",
+                padding: "1rem",
+            }}
+        >
+            <button
+                style={{
+                    padding: "0.5rem",
+                    borderRadius: "0.5rem",
+                    border: "1px solid white",
+                }}
+                onClick={async (e) => {
+                    e.stopPropagation();
+                    const response = await fetch(
+                        `/api/vote/count/?postId=${encodeURIComponent(
+                            postId
+                        )}&postType=${encodeURIComponent(
+                            "question"
+                        )}&voteType=upvote`,
+                        {
+                            method: "POST",
+                            credentials: "include",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        }
+                    );
+                    if (response.ok) {
+                        getVotes();
+                    }
+                }}
+            >
+                ^
+            </button>
+            {counts.upvotes - counts.downvotes} votes
+            <button
+                style={{
+                    padding: "0.5rem",
+                    borderRadius: "0.5rem",
+                    border: "1px solid white",
+                    transform: "rotate(180deg)",
+                }}
+                onClick={async (e) => {
+                    e.stopPropagation();
+                    const response = await fetch(
+                        `/api/vote/count/?postId=${encodeURIComponent(
+                            postId
+                        )}&postType=${encodeURIComponent(
+                            "question"
+                        )}&voteType=downvote`,
+                        {
+                            method: "POST",
+                            credentials: "include",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        }
+                    );
+                    if (response.ok) {
+                        getVotes();
+                    }
+                }}
+            >
+                ^
+            </button>
+        </div>
+    );
+}

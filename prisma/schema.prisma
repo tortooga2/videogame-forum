@@ -27,6 +27,8 @@ model User {
 
   questions    Question[]
   answers      Answer[]
+  answerVotes  AnswerVote[]
+  questionVotes QuestionVote[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -93,7 +95,7 @@ model Authenticator {
 model Question {
   id        String   @id @default(cuid())
   userId  String
-  title  String
+  title  String?
   description String?
 
   upvotes   Int      @default(0)
@@ -103,6 +105,7 @@ model Question {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  questionVotes QuestionVote[]
   answers   Answer[]
 
   poster    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -116,10 +119,40 @@ model Answer {
   upvotes   Int      @default(0)
   downvotes Int      @default(0)
 
+  answerVotes AnswerVote[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   poster    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question  Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+}
+
+model AnswerVote {
+  id        String   @id @default(cuid())
+  userId    String
+  answerId  String
+  vote      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  voter     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answer    Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+
+}
+
+model QuestionVote {
+  id        String   @id @default(cuid())
+  userId    String
+  questionId String
+  vote      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  voter     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   question  Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
 }

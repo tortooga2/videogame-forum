@@ -1,4 +1,7 @@
 import prisma from "@/lib/prisma";
+
+import VoteArea from "@/components/voteArea";
+
 export default async function QuestionPage({
     params: { id },
 }: {
@@ -24,11 +27,7 @@ export default async function QuestionPage({
             <p>Created by: {question.userId}</p>
             <p>Created at: {question.createdAt.toString()}</p>
             <p>Updated at: {question.updatedAt.toString()}</p>
-            <div style={{ display: "flex", gap: "1rem" }}>
-                <button>{question.upvotes}</button>
-                <p>|</p>
-                <button>{question.downvotes}</button>
-            </div>
+            <VoteArea postId={question.id} postType={"question"} />
         </div>
     );
 }

@@ -70,7 +70,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 const sessionToken = uuid();
 
                 if (!params.token.sub) {
-                    throw new Error("No user Id found in token");
+                    return null;
                 }
 
                 const createdSession = await adapter?.createSession?.({
@@ -80,7 +80,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 });
 
                 if (!createdSession) {
-                    throw new Error("Failed to create session");
+                    return null;
                 }
                 return sessionToken;
             }

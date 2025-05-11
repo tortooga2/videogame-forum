@@ -6,6 +6,8 @@ import getPosts from "@/lib/backendFunction/getQuestion";
 
 import Link from "next/link";
 
+import VoteArea from "@/components/voteArea";
+
 export default async function Home() {
     const session = await auth();
     if (!session) redirect("/sign-in");
@@ -52,7 +54,7 @@ export default async function Home() {
                     borderRadius: "0.5rem",
                 }}
             >
-                <h1>Create Post</h1>
+                <h1>New Question</h1>
                 <input
                     type="text"
                     name="title"
@@ -74,7 +76,9 @@ export default async function Home() {
                         padding: "0.5rem",
                     }}
                 ></textarea>
-                <button type="submit">Create Post</button>
+                <button type="submit" className="hover:bg-[#666666] w-fit p-2">
+                    Create Post
+                </button>
             </form>
             <h1
                 style={{
@@ -119,12 +123,8 @@ export default async function Home() {
                             <p>By: {question.userId}</p>
                             <p>Created at: {question.createdAt.toString()}</p>
                             <p>{question.description}</p>
-                            <div style={{ display: "flex", gap: "1rem" }}>
-                                <button>{question.upvotes}</button>
-                                <p>|</p>
-                                <button>{question.downvotes}</button>
-                            </div>
                         </Link>
+                        <VoteArea postId={question.id} postType={"question"} />
                     </div>
                 ))}
             </div>
