@@ -40,6 +40,7 @@ export default function PostFeed({ questions }: { questions: Post[] }) {
                         title={q.title}
                         description={q.description}
                         createdAt={q.createdAt}
+                        answerCount={q._count?.answers || 0}
                     />
                 ))}
             </div>

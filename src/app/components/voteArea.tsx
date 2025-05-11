@@ -1,6 +1,8 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { handleVote, getVotes } from "@/lib/frontendFunctions/handleVote";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
 export default function VoteArea({
     postId,
@@ -17,56 +19,40 @@ export default function VoteArea({
     }, []);
 
     return (
-        <div
-            style={{
-                display: "flex",
-                gap: "1rem",
-                padding: "1rem",
-            }}
-        >
+        <div className="flex items-center gap-4 px-4 py-2 text-white">
+            {/* Upvote */}
             <button
-                style={{
-                    padding: "0.5rem",
-                    borderRadius: "0.5rem",
-                    border: "1px solid white",
-                    backgroundColor:
-                        hasVoted === "upvote" ? "red" : "#ffffff00",
-                }}
-                onClick={async (e) => {
-                    handleVote(
-                        e,
-                        "upvote",
-                        postType,
-                        postId,
-                        setCounts,
-                        setHasVoted
-                    );
-                }}
+                onClick={(e) =>
+                    handleVote(e, "upvote", postType, postId, setCounts, setHasVoted)
+                }
+                className={`p-2 rounded-full border transition 
+          ${hasVoted === "upvote"
+                        ? "bg-lime-500 border-lime-500 text-black"
+                        : "border-gray-400 hover:bg-lime-600 hover:border-lime-600"
+                    }`}
+                title="Upvote"
             >
-                ^
+                <FaArrowUp />
             </button>
-            {counts.upvotes - counts.downvotes} votes
+
+            {/* Vote count */}
+            <span className="font-semibold text-lg">
+                {counts.upvotes - counts.downvotes} votes
+            </span>
+
+            {/* Downvote */}
             <button
-                style={{
-                    padding: "0.5rem",
-                    borderRadius: "0.5rem",
-                    border: "1px solid white",
-                    transform: "rotate(180deg)",
-                    backgroundColor:
-                        hasVoted === "downvote" ? "blue" : "#ffffff00",
-                }}
-                onClick={async (e) => {
-                    handleVote(
-                        e,
-                        "downvote",
-                        postType,
-                        postId,
-                        setCounts,
-                        setHasVoted
-                    );
-                }}
+                onClick={(e) =>
+                    handleVote(e, "downvote", postType, postId, setCounts, setHasVoted)
+                }
+                className={`p-2 rounded-full border transition 
+          ${hasVoted === "downvote"
+                        ? "bg-pink-500 border-pink-500 text-black"
+                        : "border-gray-400 hover:bg-pink-600 hover:border-pink-600"
+                    }`}
+                title="Downvote"
             >
-                ^
+                <FaArrowDown />
             </button>
         </div>
     );
