@@ -6,9 +6,7 @@ import {
     QuestionWithRelations,
 } from "@/lib/backendFunction/getAllQuestion";
 import Navbar from "./components/Navbar";
-import Link from "next/link";
-import Tabbar from "./components/Tabbar";
-import PostCard from "./components/PostCard";
+
 import GameNewsCarousel from "./components/GameNewsCarousel";
 import getTopUsersThisWeek from "@/lib/backendFunction/getTopUsers";
 import PostFeed from "./components/PostFeed";
@@ -25,7 +23,9 @@ export default async function Home() {
 
     return (
         <div className="w-full min-h-screen">
-            <Navbar user={session.user?.email} />
+            <Navbar
+                user={session.user?.email ? session.user.email : "Anonymous"}
+            />
 
             {/* Main Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 py-4">

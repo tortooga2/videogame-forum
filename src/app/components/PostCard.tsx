@@ -2,7 +2,7 @@
 "use client";
 
 import VoteArea from "./voteArea";
-import type { QuestionWithRelations } from "@/lib/backendFunction/getQuestion";
+import type { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion";
 
 import Link from "next/link";
 
