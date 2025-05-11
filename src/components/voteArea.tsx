@@ -10,9 +10,10 @@ export default function VoteArea({
     postType: string;
 }) {
     const [counts, setCounts] = useState({ upvotes: 0, downvotes: 0 });
+    const [hasVoted, setHasVoted] = useState("none");
 
     useEffect(() => {
-        getVotes(postType, postId, setCounts);
+        getVotes(postType, postId, setCounts, setHasVoted);
     }, []);
 
     return (
@@ -28,9 +29,17 @@ export default function VoteArea({
                     padding: "0.5rem",
                     borderRadius: "0.5rem",
                     border: "1px solid white",
+                    backgroundColor: hasVoted === "upvote" ? "red" : "none",
                 }}
                 onClick={async (e) => {
-                    handleVote(e, "upvote", postType, postId, setCounts);
+                    handleVote(
+                        e,
+                        "upvote",
+                        postType,
+                        postId,
+                        setCounts,
+                        setHasVoted
+                    );
                 }}
             >
                 ^
@@ -42,9 +51,17 @@ export default function VoteArea({
                     borderRadius: "0.5rem",
                     border: "1px solid white",
                     transform: "rotate(180deg)",
+                    backgroundColor: hasVoted === "downvote" ? "blue" : "none",
                 }}
                 onClick={async (e) => {
-                    handleVote(e, "downvote", postType, postId, setCounts);
+                    handleVote(
+                        e,
+                        "downvote",
+                        postType,
+                        postId,
+                        setCounts,
+                        setHasVoted
+                    );
                 }}
             >
                 ^

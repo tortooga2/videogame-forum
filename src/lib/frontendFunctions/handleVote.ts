@@ -10,7 +10,8 @@ export const handleVote = async (
             upvotes: number;
             downvotes: number;
         }>
-    >
+    >,
+    setHasVote: Dispatch<SetStateAction<string>>
 ) => {
     e.stopPropagation();
     const response = await fetch(
@@ -32,6 +33,7 @@ export const handleVote = async (
             upvotes: data.upVoteCount,
             downvotes: data.downVoteCount,
         });
+        setHasVote(data.hasVoted);
     }
 };
 
@@ -43,7 +45,8 @@ export const getVotes = async (
             upvotes: number;
             downvotes: number;
         }>
-    >
+    >,
+    setHasVote: Dispatch<SetStateAction<string>>
 ) => {
     const response = await fetch(
         `/api/vote/count?postType=${encodeURIComponent(
@@ -63,5 +66,6 @@ export const getVotes = async (
             upvotes: data.upvotes,
             downvotes: data.downvotes,
         });
+        setHasVote(data.hasVoted);
     }
 };
