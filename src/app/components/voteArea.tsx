@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { handleVote, getVotes } from "@/lib/frontendFunctions/handleVote";
 
 export default function VoteArea({
     postId,
@@ -9,31 +10,10 @@ export default function VoteArea({
     postType: string;
 }) {
     const [counts, setCounts] = useState({ upvotes: 0, downvotes: 0 });
-
-    const getVotes = async () => {
-        const response = await fetch(
-            `/api/vote/count?postType=${encodeURIComponent(
-                postType
-            )}&postId=${encodeURIComponent(postId)}`,
-            {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-        const data = await response.json();
-        if (response.ok) {
-            setCounts({
-                upvotes: data.upvotes,
-                downvotes: data.downvotes,
-            });
-        }
-    };
+    const [hasVoted, setHasVoted] = useState("none");
 
     useEffect(() => {
-        getVotes();
+        getVotes(postType, postId, setCounts, setHasVoted);
     }, []);
 
     return (
@@ -49,31 +29,18 @@ export default function VoteArea({
                     padding: "0.5rem",
                     borderRadius: "0.5rem",
                     border: "1px solid white",
+                    backgroundColor:
+                        hasVoted === "upvote" ? "red" : "#ffffff00",
                 }}
                 onClick={async (e) => {
-                    e.stopPropagation();
-                    const response = await fetch(
-                        `/api/vote/count/?postId=${encodeURIComponent(
-                            postId
-                        )}&postType=${encodeURIComponent(
-                            "question"
-                        )}&voteType=upvote`,
-                        {
-                            method: "POST",
-                            credentials: "include",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                        }
+                    handleVote(
+                        e,
+                        "upvote",
+                        postType,
+                        postId,
+                        setCounts,
+                        setHasVoted
                     );
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log(data);
-                        setCounts({
-                            upvotes: data.upVoteCount,
-                            downvotes: data.downVoteCount,
-                        });
-                    }
                 }}
             >
                 ^
@@ -85,31 +52,18 @@ export default function VoteArea({
                     borderRadius: "0.5rem",
                     border: "1px solid white",
                     transform: "rotate(180deg)",
+                    backgroundColor:
+                        hasVoted === "downvote" ? "blue" : "#ffffff00",
                 }}
                 onClick={async (e) => {
-                    e.stopPropagation();
-                    const response = await fetch(
-                        `/api/vote/count/?postId=${encodeURIComponent(
-                            postId
-                        )}&postType=${encodeURIComponent(
-                            "question"
-                        )}&voteType=downvote`,
-                        {
-                            method: "POST",
-                            credentials: "include",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                        }
+                    handleVote(
+                        e,
+                        "downvote",
+                        postType,
+                        postId,
+                        setCounts,
+                        setHasVoted
                     );
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log(data);
-                        setCounts({
-                            upvotes: data.upVoteCount,
-                            downvotes: data.downVoteCount,
-                        });
-                    }
                 }}
             >
                 ^
