@@ -1,6 +1,8 @@
 import VoteArea from "./voteArea";
 
-export default async function Answer({ answer }) {
+import { Answer as AnswerModel } from "@prisma/client";
+
+export default async function Answer({ answer }: { answer: AnswerModel }) {
     return (
         <div>
             <p>{answer.userId}</p>
