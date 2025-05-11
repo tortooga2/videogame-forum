@@ -9,6 +9,8 @@ import Tabbar from "./components/Tabbar";
 import PostCard from "./components/PostCard";
 import GameNewsCarousel from "./components/GameNewsCarousel";
 
+import VoteArea from "@/components/voteArea";
+
 export default async function Home() {
     const session = await auth();
     if (!session) redirect("/sign-in");

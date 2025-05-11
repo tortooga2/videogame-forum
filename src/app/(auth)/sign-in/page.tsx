@@ -6,12 +6,31 @@ export default async function SignIn() {
     if (session) redirect("/");
 
     return (
-        <div>
-            <h1>Sign in Here!</h1>
-            <p>Sign in to access your account.</p>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100vh",
+                gap: "1.5rem",
+            }}
+        >
+            <h1
+                style={{
+                    fontSize: "xx-large",
+                    textDecoration: "underline",
+                }}
+            >
+                Sign in Here!
+            </h1>
 
             <button
-                style={{ border: "1px solid white" }}
+                style={{
+                    border: "1px solid white",
+                    padding: "0.5rem",
+                    borderRadius: "0.5rem",
+                }}
                 onClick={async () => {
                     "use server";
                     await signIn("github");
@@ -19,16 +38,34 @@ export default async function SignIn() {
             >
                 Sign in with GitHub
             </button>
+            <div>or</div>
 
             <form
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                }}
                 action={async (formData: FormData) => {
                     "use server";
                     const email = formData.get("email");
                     const password = formData.get("password");
-                    await signIn("credentials", {
-                        email,
-                        password,
-                    });
+                    try {
+                        const signin = await signIn("credentials", {
+                            email,
+                            password,
+                        });
+                        if (!signin) {
+                            // Handle error (e.g., show a message to the user)
+                            console.error("Sign in failed");
+                            return;
+                        }
+                        redirect("/");
+                    } catch (error) {
+                        console.error("Sign in failed", error);
+                        // Handle error (e.g., show a message to the user)
+                        return;
+                    }
                 }}
             >
                 <input

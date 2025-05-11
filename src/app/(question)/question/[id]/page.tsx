@@ -1,9 +1,14 @@
 import prisma from "@/lib/prisma";
+
+import VoteArea from "@/components/voteArea";
+
 export default async function QuestionPage({
-    params: { id },
+    params,
 }: {
-    params: { id: string };
+    // params must be a Promise of your params shape
+    params: Promise<{ id: string }>;
 }) {
+    const { id } = await params;
     if (!id) {
         return <div>404 not found</div>;
     }
@@ -24,11 +29,7 @@ export default async function QuestionPage({
             <p>Created by: {question.userId}</p>
             <p>Created at: {question.createdAt.toString()}</p>
             <p>Updated at: {question.updatedAt.toString()}</p>
-            <div style={{ display: "flex", gap: "1rem" }}>
-                <button>{question.upvotes}</button>
-                <p>|</p>
-                <button>{question.downvotes}</button>
-            </div>
+            <VoteArea postId={question.id} postType={"question"} />
         </div>
     );
 }

@@ -2,7 +2,8 @@ import bcrypt from "bcrypt";
 
 export const hashPassword = async (password: string) => {
     if (!password) {
-        throw new Error("Password is required");
+        console.log("Password is missing");
+        return null;
     }
 
     const saltRounds = 10;
@@ -16,7 +17,8 @@ export const comparePassword = async (
     hashedPassword: string | null
 ) => {
     if (!password || !hashedPassword) {
-        throw new Error("Password and hashed password are required");
+        console.log("Password or hashed password is missing");
+        return false;
     }
 
     const isMatch = await bcrypt.compare(password, hashedPassword);
