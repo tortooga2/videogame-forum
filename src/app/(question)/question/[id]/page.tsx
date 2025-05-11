@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { getQuestionById } from "@/lib/backendFunction/getQuestionById";
 
 import VoteArea from "@/components/voteArea";
 
@@ -12,14 +12,11 @@ export default async function QuestionPage({
     if (!id) {
         return <div>404 not found</div>;
     }
-    const question = await prisma.question.findUnique({
-        where: {
-            id: id,
-        },
-    });
+    const question = await getQuestionById(id);
     if (!question) {
         return <div>404 not found</div>;
     }
+
     return (
         <div>
             <h1 style={{ fontSize: "xx-large", textDecoration: "underline" }}>
