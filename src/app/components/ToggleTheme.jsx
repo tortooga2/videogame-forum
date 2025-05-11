@@ -10,13 +10,13 @@ export default function ToggleTheme() {
         const stored = localStorage.getItem("theme");
         const prefersDark = stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
         setIsDark(prefersDark);
-        document.body.classList.toggle("dark", prefersDark);
+        document.documentElement.classList.toggle("dark", prefersDark); // ← change here
     }, []);
 
     const toggleTheme = () => {
         const newMode = !isDark;
         setIsDark(newMode);
-        document.body.classList.toggle("dark", newMode);
+        document.documentElement.classList.toggle("dark", newMode); // ← change here
         localStorage.setItem("theme", newMode ? "dark" : "light");
     };
 

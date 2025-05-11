@@ -1,5 +1,6 @@
 // components/PostCard.tsx
 "use client";
+import VoteArea from "./voteArea";
 
 import Link from "next/link";
 
@@ -35,11 +36,9 @@ export default function PostCard({
                 <p className="text-white">{description}</p>
             </Link>
 
-            {/* <div className="flex gap-4 items-center text-sm">
-                <button className="hover:text-green-300">⬆ {upvotes}</button>
-                <span className="text-gray-400">|</span>
-                <button className="hover:text-red-300">⬇ {downvotes}</button>
-            </div> */}
+            <div className="flex gap-4 items-center text-sm">
+                <VoteArea postId={id} postType="question" />
+            </div>
         </div>
     );
 }

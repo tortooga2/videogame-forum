@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-import VoteArea from "@/components/voteArea";
+import VoteArea from "@/app/components/voteArea";
 
 export default async function QuestionPage({
     params,
