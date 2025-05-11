@@ -50,22 +50,17 @@ export default async function SignIn() {
                     "use server";
                     const email = formData.get("email");
                     const password = formData.get("password");
-                    try {
-                        const signin = await signIn("credentials", {
-                            email,
-                            password,
-                        });
-                        if (!signin) {
-                            // Handle error (e.g., show a message to the user)
-                            console.error("Sign in failed");
-                            return;
-                        }
-                        redirect("/");
-                    } catch (error) {
-                        console.error("Sign in failed", error);
+
+                    const signin = await signIn("credentials", {
+                        email,
+                        password,
+                    });
+                    if (!signin) {
                         // Handle error (e.g., show a message to the user)
+                        console.error("Sign in failed");
                         return;
                     }
+                    redirect("/");
                 }}
             >
                 <input
