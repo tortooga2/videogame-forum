@@ -7,6 +7,7 @@ import {
     QuestionWithRelations,
 } from "@/lib/backendFunction/getAllQuestion";
 import Navbar from "./components/Navbar";
+import AdBlock from "./components/Ad";
 
 import GameNewsCarousel from "./components/GameNewsCarousel";
 import getTopUsersThisWeek from "@/lib/backendFunction/getTopUsers";
@@ -89,7 +90,6 @@ export default async function Home() {
                 <div className="flex flex-col gap-6 h-full">
                     <GameNewsCarousel />
 
-
                     <div className="bg-[#1a1c2c] text-white rounded-md shadow-md p-4 h-auto">
                         <h2 className="text-lg font-bold mb-2">
                             🏆 Top Users This Week
@@ -105,15 +105,7 @@ export default async function Home() {
                         </ul>
                     </div>
 
-
                     <AdBlock />
-
-
-                    
-
-
-
-
                 </div>
             </div>
         </div>
