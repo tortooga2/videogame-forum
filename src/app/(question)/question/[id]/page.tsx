@@ -5,12 +5,8 @@ import { redirect } from "next/navigation";
 
 import createAnswer from "@/lib/backendFunction/createAnswer";
 
-<<<<<<< HEAD
 import VoteArea from "@/app/components/voteArea";
-=======
-import VoteArea from "@/components/voteArea";
-import Answer from "@/components/answer";
->>>>>>> origin/main
+import Answer from "@/app/components/answer";
 
 export default async function QuestionPage({
     params,

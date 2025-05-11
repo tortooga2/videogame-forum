@@ -1,7 +1,10 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import createPost from "@/lib/backendFunction/createQuestion";
-import { getPosts } from "@/lib/backendFunction/getQuestion";
+import {
+    getPosts,
+    QuestionWithRelations,
+} from "@/lib/backendFunction/getAllQuestion";
 import Navbar from "./components/Navbar";
 import Link from "next/link";
 import Tabbar from "./components/Tabbar";
@@ -76,7 +79,9 @@ export default async function Home() {
                     </form>
 
                     {/* Posts List */}
-                    <PostFeed questions={questions} />
+                    <PostFeed
+                        questions={questions as QuestionWithRelations[]}
+                    />
                 </div>
 
                 {/* RIGHT: Sidebar */}
