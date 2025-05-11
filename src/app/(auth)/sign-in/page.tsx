@@ -6,31 +6,11 @@ export default async function SignIn() {
     if (session) redirect("/");
 
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "100vh",
-                gap: "1.5rem",
-            }}
-        >
-            <h1
-                style={{
-                    fontSize: "xx-large",
-                    textDecoration: "underline",
-                }}
-            >
-                Sign in Here!
-            </h1>
+        <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-4 bg-[#0e0d22] text-white">
+            <h1 className="text-3xl font-bold underline">Sign in Here!</h1>
 
             <button
-                style={{
-                    border: "1px solid white",
-                    padding: "0.5rem",
-                    borderRadius: "0.5rem",
-                }}
+                className="border border-gray-400 px-4 py-2 rounded-md hover:bg-[#1e1e30] transition"
                 onClick={async () => {
                     "use server";
                     await signIn("github");
@@ -38,35 +18,31 @@ export default async function SignIn() {
             >
                 Sign in with GitHub
             </button>
-            <div>or</div>
+
+            <div className="text-sm text-gray-400">or</div>
 
             <form
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
-                }}
                 action={async (formData: FormData) => {
                     "use server";
                     const email = formData.get("email");
                     const password = formData.get("password");
+
                     try {
                         const signin = await signIn("credentials", {
                             email,
                             password,
                         });
                         if (!signin) {
-                            // Handle error (e.g., show a message to the user)
                             console.error("Sign in failed");
                             return;
                         }
                         redirect("/");
                     } catch (error) {
                         console.error("Sign in failed", error);
-                        // Handle error (e.g., show a message to the user)
                         return;
                     }
                 }}
+                className="flex flex-col gap-4 w-full max-w-xs"
             >
                 <input
                     name="email"
@@ -74,6 +50,7 @@ export default async function SignIn() {
                     type="text"
                     required
                     autoComplete="email"
+                    className="px-3 py-2 rounded bg-[#2a2942] text-white placeholder-gray-300 outline-none"
                 />
                 <input
                     type="password"
@@ -81,8 +58,14 @@ export default async function SignIn() {
                     placeholder="Password"
                     required
                     autoComplete="password"
+                    className="px-3 py-2 rounded bg-[#2a2942] text-white placeholder-gray-300 outline-none"
                 />
-                <button type="submit">Sign in</button>
+                <button
+                    type="submit"
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded transition"
+                >
+                    Sign in
+                </button>
             </form>
         </div>
     );
