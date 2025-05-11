@@ -6,12 +6,12 @@ import type { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion
 
 import Link from "next/link";
 
+
 export default function PostCard({
     question,
 }: {
     question: QuestionWithRelations;
 }) {
-    console.log("PostCard", question);
     return (
         <div className="bg-[#1a1c2c] border border-gray-600 rounded-md p-4 flex flex-col gap-3 hover:shadow-md transition">
             <Link href={`/question/${question.id}`} className="space-y-1">

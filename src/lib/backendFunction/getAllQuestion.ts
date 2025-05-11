@@ -17,6 +17,7 @@ export async function getPosts(): Promise<QuestionWithRelations[] | null> {
         },
     });
 
+
     if (!posts) {
         return null;
     }
@@ -26,4 +27,5 @@ export async function getPosts(): Promise<QuestionWithRelations[] | null> {
         title: p.title ?? "",
         description: p.description ?? "",
     }));
+
 }

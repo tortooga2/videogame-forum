@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import createPost from "@/lib/backendFunction/createQuestion";
+
 import {
     getPosts,
     QuestionWithRelations,
@@ -88,10 +89,12 @@ export default async function Home() {
                 <div className="flex flex-col gap-6 h-full">
                     <GameNewsCarousel />
 
+
                     <div className="bg-[#1a1c2c] text-white rounded-md shadow-md p-4 h-auto">
                         <h2 className="text-lg font-bold mb-2">
                             🏆 Top Users This Week
                         </h2>
+
                         <ul className="list-disc list-inside text-sm">
                             {topUsers.map((user) => (
                                 <li key={user.id}>
@@ -101,6 +104,16 @@ export default async function Home() {
                             ))}
                         </ul>
                     </div>
+
+
+                    <AdBlock />
+
+
+                    
+
+
+
+
                 </div>
             </div>
         </div>
