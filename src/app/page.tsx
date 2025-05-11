@@ -4,14 +4,23 @@ import { signOut } from "@/lib/auth";
 import createPost from "@/lib/backendFunction/createQuestion";
 import getPosts from "@/lib/backendFunction/getQuestion";
 
+import Link from "next/link";
+
 export default async function Home() {
     const session = await auth();
     if (!session) redirect("/sign-in");
 
-    const posts = await getPosts();
+    const questions = await getPosts();
 
     return (
-        <div>
+        <div
+            style={{
+                margin: "auto",
+                maxWidth: "800px",
+                paddingTop: "2rem",
+                paddingBottom: "2rem",
+            }}
+        >
             <div>
                 <span>{session.user?.email}</span>
             </div>
@@ -38,37 +47,84 @@ export default async function Home() {
                     display: "flex",
                     flexDirection: "column",
                     gap: "1rem",
-                    width: "30%",
                     padding: "1rem",
                     border: "1px solid white",
-                    borderRadius: "5px",
+                    borderRadius: "0.5rem",
                 }}
             >
                 <h1>Create Post</h1>
-                <input type="text" name="title" placeholder="Title" required />
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Title"
+                    required
+                    style={{
+                        borderBottom: "1px solid white",
+                    }}
+                />
                 <textarea
                     name="content"
                     placeholder="Content"
                     required
+                    style={{
+                        height: "200px",
+                        resize: "none",
+                        border: "1px solid white",
+                        borderRadius: "0.5rem",
+                        padding: "0.5rem",
+                    }}
                 ></textarea>
                 <button type="submit">Create Post</button>
             </form>
+            <h1
+                style={{
+                    fontSize: "xx-large",
+                    padding: "1rem",
+                }}
+            >
+                Posts
+            </h1>
             <div
                 style={{
                     display: "flex",
                     flexDirection: "column",
                     gap: "1rem",
+                    height: "100%",
+                    overflowY: "auto",
                 }}
             >
-                <h1>Posts</h1>
                 {/* Render posts here */}
                 {/* Example: posts.map(post => <Post key={post.id} post={post} />) */}
-                {posts?.map((post) => (
-                    <div key={post.id}>
-                        <h2 style={{ fontSize: "large" }}>{post.title}</h2>
-                        <p>{post.description}</p>
-                        <p>By: {post.userId}</p>
-                        <p>Created at: {post.createdAt.toString()}</p>
+                {questions?.map((question) => (
+                    <div
+                        key={question.id}
+                        style={{
+                            border: "1px solid white",
+                            padding: "1rem",
+                            gap: "1rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            borderRadius: "0.5rem",
+                        }}
+                    >
+                        <Link href={`question/${question.id}`}>
+                            <h2
+                                style={{
+                                    fontSize: "large",
+                                    textDecoration: "underline",
+                                }}
+                            >
+                                {question.title}
+                            </h2>
+                            <p>By: {question.userId}</p>
+                            <p>Created at: {question.createdAt.toString()}</p>
+                            <p>{question.description}</p>
+                            <div style={{ display: "flex", gap: "1rem" }}>
+                                <button>{question.upvotes}</button>
+                                <p>|</p>
+                                <button>{question.downvotes}</button>
+                            </div>
+                        </Link>
                     </div>
                 ))}
             </div>
