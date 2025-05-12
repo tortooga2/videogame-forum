@@ -45,11 +45,16 @@ export default async function QuestionPage({
                 <h1 className="text-3xl font-bold underline">
                     {question.title}
                 </h1>
-                <p className="text-gray-300">{question.description}</p>
-                <p className="text-sm text-gray-400">By: {question.userId}</p>
+                <p style={{ color: question.tag.color }}>{question.tag.name}</p>
+                <p className="text-sm text-gray-400">
+                    By: {question.poster.email.split("@")[0]}{" "}
+                </p>
                 <p className="text-sm text-gray-400">
                     Created: {new Date(question.createdAt).toLocaleString()}
                 </p>
+
+                <p className="text-gray-300">{question.description}</p>
+
                 <p className="text-sm text-gray-500">
                     Updated: {new Date(question.updatedAt).toLocaleString()}
                 </p>

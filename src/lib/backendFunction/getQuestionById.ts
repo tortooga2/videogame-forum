@@ -1,15 +1,24 @@
 import prisma from "@/lib/prisma";
+import { QuestionWithRelations } from "./getAllQuestion";
 
-export const getQuestionById = async (questionId: string) => {
-    const question = await prisma.question.findFirst({
-        where: {
-            id: questionId,
+export const getQuestionById = async (
+    questionId: string
+): Promise<QuestionWithRelations | null> => {
+    const post = await prisma.question.findFirst({
+        where: { id: questionId },
+        include: {
+            poster: { select: { id: true, name: true, email: true } },
+            tag: { select: { id: true, name: true, color: true } },
         },
     });
 
-    if (!question) {
+    if (!post) {
         return null;
     }
 
-    return question;
+    return {
+        ...post,
+        title: post.title ?? "",
+        description: post.description ?? "",
+    };
 };
