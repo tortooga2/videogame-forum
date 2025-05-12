@@ -1,4 +1,3 @@
-// File: app/(auth)/sign-in/page.tsx
 import { auth, signIn } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
