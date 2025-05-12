@@ -57,7 +57,7 @@ export default function GameNewsCarousel() {
                             alt={item.title}
                             width={800}
                             height={250}
-                            className="w-full rounded-md object-contain h-[250px] bg-no-repeat bg-center object-cover"
+                            className="w-full rounded-md  h-[250px] bg-no-repeat bg-center object-cover"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-4 rounded-b-md">
                             <a href={item.link} className="hover:underline">
