@@ -19,17 +19,25 @@ export default function VoteArea({
     }, [postId, postType]);
 
     return (
-        <div className="flex items-center gap-4 px-4 py-2 text-white">
+        <div className="flex items-center gap-4 px-4 py-2 ">
             {/* Upvote */}
             <button
                 onClick={(e) =>
-                    handleVote(e, "upvote", postType, postId, setCounts, setHasVoted)
+                    handleVote(
+                        e,
+                        "upvote",
+                        postType,
+                        postId,
+                        setCounts,
+                        setHasVoted
+                    )
                 }
                 className={`p-2 rounded-full border transition 
-          ${hasVoted === "upvote"
-                        ? "bg-lime-500 border-lime-500 text-black"
-                        : "border-gray-400 hover:bg-lime-600 hover:border-lime-600"
-                    }`}
+          ${
+              hasVoted === "upvote"
+                  ? "bg-lime-500 border-lime-500 "
+                  : "border-gray-400 hover:bg-lime-600 hover:border-lime-600"
+          }`}
                 title="Upvote"
             >
                 <FaArrowUp />
@@ -43,13 +51,21 @@ export default function VoteArea({
             {/* Downvote */}
             <button
                 onClick={(e) =>
-                    handleVote(e, "downvote", postType, postId, setCounts, setHasVoted)
+                    handleVote(
+                        e,
+                        "downvote",
+                        postType,
+                        postId,
+                        setCounts,
+                        setHasVoted
+                    )
                 }
                 className={`p-2 rounded-full border transition 
-          ${hasVoted === "downvote"
-                        ? "bg-pink-500 border-pink-500 text-black"
-                        : "border-gray-400 hover:bg-pink-600 hover:border-pink-600"
-                    }`}
+          ${
+              hasVoted === "downvote"
+                  ? "bg-pink-500 border-pink-500"
+                  : "border-gray-400 hover:bg-pink-600 hover:border-pink-600"
+          }`}
                 title="Downvote"
             >
                 <FaArrowDown />
