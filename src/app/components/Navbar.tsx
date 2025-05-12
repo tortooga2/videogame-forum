@@ -22,6 +22,9 @@ export default function Navbar({ user }: { user: string }) {
         answers: [],
     });
     const { theme, toggleTheme } = useTheme();
+    const uniqueId = user?.split("@")[0] || "guest";
+
+    const avatarUrl = `https://robohash.org/${uniqueId}.png?set=set3`;
 
     return (
         <nav className="w-full bg-[var(--bg-color)] text-[var(--text-color)] px-6 py-4 shadow-md relative z-10 border-b border-gray-800">
@@ -63,11 +66,24 @@ export default function Navbar({ user }: { user: string }) {
                             color: "var(--text-color)",
                         }}
                     >
-                        <FaUserCircle className="text-2xl" />
+                        {!avatarUrl ? (
+                            <FaUserCircle className="text-2xl" />
+                        ) : (
+                            <img
+                                src={avatarUrl}
+                                alt="User Avatar"
+                                className="w-8 h-8 rounded-full object-cover"
+                                onError={(e) => {
+                                    (e.currentTarget.style.display = "none");
+                                    // Optional: Add a fallback state if you want to render FaUserCircle in place
+                                }}
+                            />
+                        )}
                         <span className="hidden md:inline text-sm">
                             {user.split("@")[0]}
                         </span>
                     </button>
+
 
                     {/* Dropdown Menu */}
                     {menuOpen && (
