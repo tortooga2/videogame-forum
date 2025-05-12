@@ -14,6 +14,7 @@ export async function getPosts(): Promise<QuestionWithRelations[] | null> {
         include: {
             poster: { select: { id: true, name: true, email: true } },
             tag: { select: { id: true, name: true, color: true } },
+            answers: true,
         },
     });
 

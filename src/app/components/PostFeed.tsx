@@ -3,7 +3,6 @@
 import { useState } from "react";
 import PostCard from "./PostCard";
 import Tabbar from "./Tabbar";
-
 import { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion";
 
 export default function PostFeed({
@@ -20,6 +19,14 @@ export default function PostFeed({
             const aVotes = (a.upvotes ?? 0) - (a.downvotes ?? 0);
             const bVotes = (b.upvotes ?? 0) - (b.downvotes ?? 0);
             return bVotes - aVotes;
+        });
+    }
+
+    if (activeTab === "Unanswered") {
+        sortedQuestions.sort((a, b) => {
+            const aAnswers = a.answers?.length ?? 0;
+            const bAnswers = b.answers?.length ?? 0;
+            return aAnswers - bAnswers;
         });
     }
 

@@ -3,6 +3,7 @@
 
 import VoteArea from "./voteArea";
 import type { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion";
+import { MdComment } from "react-icons/md";
 
 import Link from "next/link";
 
@@ -34,6 +35,15 @@ export default function PostCard({
 
             <div className="flex gap-4 items-center text-sm">
                 <VoteArea postId={question.id} postType="question" />
+
+                {question.answers && (
+                    <div className="flex items-center gap-1 text-gray-400 ml-2">
+                        <MdComment className="text-lg" />
+                        <span>
+                            {question.answers.length} {question.answers.length === 1 ? "reply" : "replies"}
+                        </span>
+                    </div>
+                )}
             </div>
         </div>
     );

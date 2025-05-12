@@ -1,13 +1,14 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import createPost from "@/lib/backendFunction/createQuestion";
-
+import TagTable from "./components/TagTable";
 import {
     getPosts,
     QuestionWithRelations,
 } from "@/lib/backendFunction/getAllQuestion";
 import Navbar from "./components/Navbar";
 import AdBlock from "./components/Ad";
+import { FaTrophy } from "react-icons/fa";
 
 import GameNewsCarousel from "./components/GameNewsCarousel";
 import getTopUsersThisWeek from "@/lib/backendFunction/getTopUsers";
@@ -91,8 +92,8 @@ export default async function Home() {
                     <GameNewsCarousel />
 
                     <div className="bg-[#1a1c2c] text-white rounded-md shadow-md p-4 h-auto">
-                        <h2 className="text-lg font-bold mb-2">
-                            🏆 Top Users This Week
+                        <h2 className="text-lg font-bold mb-2 flex gap-2 items-center">
+                            <FaTrophy className="text-yellow-400" /> Top Users This Week
                         </h2>
 
                         <ul className="list-disc list-inside text-sm">
@@ -106,6 +107,8 @@ export default async function Home() {
                     </div>
 
                     <AdBlock />
+                    <TagTable tags={tags} />
+
                 </div>
             </div>
         </div>
