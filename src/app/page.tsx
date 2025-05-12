@@ -84,6 +84,7 @@ export default async function Home() {
                     {/* Posts List */}
                     <PostFeed
                         questions={questions as QuestionWithRelations[]}
+                        tags={tags}
                     />
                 </div>
 

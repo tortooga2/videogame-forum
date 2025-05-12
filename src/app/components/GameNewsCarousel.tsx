@@ -6,7 +6,7 @@ import { FaNewspaper } from "react-icons/fa";
 
 const news = [
     {
-        title: "🎬 GTA 6 Official Release Date Confirmed for May 2026",
+        title: "🎬 GTA 6 Official Release Date Confirmed for May 26, 2026",
         link: "#",
         image: "/gta6.png",
     },
@@ -21,10 +21,15 @@ const news = [
         image: "/eldenring.png",
     },
     {
-        title: " 😬 Will Fallout 5 Come Out Before Elder Scrolls 6?",
+        title: "😬 Will Fallout 5 Come Out Before Elder Scrolls 6?",
         link: "#",
         image: "/fallout5.jpg",
     },
+    {
+        title: "🥳 Gears of War coming to PS5 with 4K Remaster",
+        link: "#",
+        image: "/gears2.jpg",
+    }
 ];
 
 export default function GameNewsCarousel() {
@@ -51,8 +56,8 @@ export default function GameNewsCarousel() {
                             src={item.image}
                             alt={item.title}
                             width={800}
-                            height={300}
-                            className="w-full  rounded-md object-contain h-auto bg-no-repeat bg-center"
+                            height={250}
+                            className="w-full rounded-md object-contain h-[250px] bg-no-repeat bg-center object-cover"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-4 rounded-b-md">
                             <a href={item.link} className="hover:underline">
