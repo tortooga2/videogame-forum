@@ -27,20 +27,19 @@ export default async function SignIn() {
                     const email = formData.get("email");
                     const password = formData.get("password");
 
-                    try {
-                        const signin = await signIn("credentials", {
-                            email,
-                            password,
-                        });
-                        if (!signin) {
-                            console.error("Sign in failed");
-                            return;
-                        }
-                        redirect("/");
-                    } catch (error) {
-                        console.error("Sign in failed", error);
-                        return;
+                    const signin = await signIn("credentials", {
+                        email,
+                        password,
+                    }).catch((error) => {
+                        console.error("Sign in error:", error);
+                        return null;
+                    });
+                    console.log(signin);
+                    if (!signin) {
+                        console.error("Sign in failed");
+                        return redirect("/sign-in");
                     }
+                    redirect("/");
                 }}
                 className="flex flex-col gap-4 w-full max-w-xs"
             >
