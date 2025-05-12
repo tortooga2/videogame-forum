@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaMoon, FaSun } from "react-icons/fa";
 import { signOut } from "next-auth/react";
-import ToggleTheme from "./ToggleTheme";
 import { SlGameController } from "react-icons/sl";
 
 import { fuzzySearch } from "@/lib/frontendFunctions/fuzzySearch";
@@ -12,7 +11,7 @@ import PostCard from "./PostCard";
 import Answer from "./answer";
 import { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion";
 import { Answer as AnswerModel } from "@prisma/client";
-
+import useTheme from "@/lib/frontendFunctions/useTheme";
 export default function Navbar({ user }: { user: string }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -21,9 +20,10 @@ export default function Navbar({ user }: { user: string }) {
         questions: [],
         answers: [],
     });
+    const { theme, toggleTheme } = useTheme();
 
     return (
-        <nav className="w-full dark:bg-[#1b1a2d] text-white px-6 py-4 shadow-md relative z-10 border-b border-gray-800">
+        <nav className="w-full bg-[var(--bg-color)] text-[var(--text-color)] px-6 py-4 shadow-md relative z-10 border-b border-gray-800">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="text-xl font-bold flex items-center gap-2">
                     <SlGameController /> Tilted Towers Talk
@@ -40,16 +40,27 @@ export default function Navbar({ user }: { user: string }) {
                             setSearchResults(data);
                         }
                     }}
-                    className="w-full md:w-1/2 px-4 py-2 rounded-full border-2 border-cyan-400 focus:border-orange-400 bg-[#2a2942] text-white placeholder-gray-300 outline-none transition"
+                    className="w-full md:w-1/2 px-4 py-2 rounded-full border-2 border-cyan-400 focus:border-orange-400   outline-none transition"
+                    style={{
+                        backgroundColor: "var(--card-bg)",
+                        color: "var(--text-color)",
+                    }}
                 />
 
                 <div className="flex gap-4 items-center relative">
-                    <ToggleTheme />
+                    {/* Toggle Theme Button */}
+                    <button onClick={toggleTheme} className="text-xl">
+                        {theme === "dark" ? <FaSun /> : <FaMoon />}
+                    </button>
 
                     {/* User Avatar / Icon */}
                     <button
                         onClick={() => setMenuOpen((prev) => !prev)}
-                        className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#2a2942] hover:bg-[#3a3955] transition"
+                        className="flex items-center gap-2 px-3 py-1 rounded-full hover:bg-[#3a3955] transition"
+                        style={{
+                            backgroundColor: "var(--card-bg)",
+                            color: "var(--text-color)",
+                        }}
                     >
                         <FaUserCircle className="text-2xl" />
                         <span className="hidden md:inline text-sm">
@@ -59,7 +70,13 @@ export default function Navbar({ user }: { user: string }) {
 
                     {/* Dropdown Menu */}
                     {menuOpen && (
-                        <div className="absolute right-0 top-12 bg-[#2a2942] text-white rounded shadow-md w-40">
+                        <div
+                            className="absolute right-0 top-12  rounded shadow-md w-40"
+                            style={{
+                                backgroundColor: "var(--card-bg)",
+                                color: "var(--text-color)",
+                            }}
+                        >
                             <button
                                 onClick={() => {
                                     if (

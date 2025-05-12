@@ -19,7 +19,7 @@ export default function Tabbar({ onTabChange, onTagChange, tags }: TabbarProps) 
     };
 
     return (
-        <div className="w-full bg-[#0e0d22] box-border rounded-md px-4 py-3 overflow-x-auto border-b border-2 border-gray-600 shadow-inner flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="w-full box-border rounded-md px-4 py-3 overflow-x-auto border-b border-2 border-gray-600 shadow-inner flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}>
             <div className="flex gap-4 md:gap-6 whitespace-nowrap text-sm sm:text-base">
                 {tabs.map((tab) => {
                     const isActive = activeTab === tab;
@@ -33,8 +33,8 @@ export default function Tabbar({ onTabChange, onTagChange, tags }: TabbarProps) 
                                 setActiveTab(tab);
                             }}
                             className={`pb-1 px-2 font-semibold border-b-2 transition duration-200 ${isActive
-                                ? `text-white ${underlineColor}`
-                                : "border-transparent text-gray-300 hover:text-[#ff4ecd]"
+                                ? ` ${underlineColor}`
+                                : "border-transparent  hover:text-[#ff4ecd]"
                                 }`}
                         >
                             {tab}
@@ -46,7 +46,8 @@ export default function Tabbar({ onTabChange, onTagChange, tags }: TabbarProps) 
             {/* Tag Filter Dropdown */}
             <select
                 onChange={(e) => onTagChange(e.target.value)}
-                className="bg-[#1a1c2c] text-white border border-gray-600 rounded px-3 py-1 text-sm"
+                className=" border border-gray-600 rounded px-3 py-1 text-sm"
+                style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}
             >
                 <option value="">All Tags</option>
                 {tags.map((tag) => (

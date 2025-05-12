@@ -4,32 +4,23 @@
 
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg-color: #e2e5ea;
+  --card-bg: #c5ccdb;
+  --text-color: #1e2633;
 }
 
 .dark {
-  --bg-color: #0B0C1A;
+  --bg-color: #0e0d22;
+  /* navbar and page bg */
   --text-color: #ffffff;
+  --card-bg: #1a1c2c;
+  /* post cards, create form, etc */
 }
+
 
 body {
   background: var(--bg-color);
-  color: var(--text-color);
+    color: var(--text-color);
   font-family: Arial, Helvetica, sans-serif;
   transition: background-color 0.3s, color 0.3s;
 }
