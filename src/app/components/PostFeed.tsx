@@ -55,7 +55,11 @@ export default function PostFeed({
     return (
         <>
             <div className="flex items-center justify-between mb-2">
-                <Tabbar onTabChange={setActiveTab} onTagChange={setSelectedTag} tags={tags} />
+                <Tabbar
+                    onTabChange={setActiveTab}
+                    onTagChange={setSelectedTag}
+                    tags={tags}
+                />
             </div>
 
             <h1 className="text-2xl font-bold mt-8">Posts</h1>

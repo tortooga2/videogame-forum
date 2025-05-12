@@ -95,7 +95,8 @@ export default async function Home() {
 
                     <div className=" rounded-md shadow-md p-4 h-auto border border-gray-600" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}>
                         <h2 className="text-lg font-bold mb-2 flex gap-2 items-center">
-                            <FaTrophy className="text-yellow-400" /> Top Users This Week
+                            <FaTrophy className="text-yellow-400" /> Top Users
+                            This Week
                         </h2>
 
                         <ul className="list-disc list-inside text-sm">
@@ -110,7 +111,6 @@ export default async function Home() {
 
                     <AdBlock />
                     <TagTable tags={tags} />
-
                 </div>
             </div>
         </div>
