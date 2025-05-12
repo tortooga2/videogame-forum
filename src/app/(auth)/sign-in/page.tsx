@@ -1,71 +1,92 @@
 import { auth, signIn } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export default async function SignIn() {
-    const session = await auth();
-    if (session) redirect("/");
+  const session = await auth();
+  if (session) {
+    redirect("/");
+    return null;
+  }
 
-    return (
-        <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-4 bg-[#0e0d22] text-white">
-            <h1 className="text-3xl font-bold underline">Sign in Here!</h1>
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#0e0d22] p-4 text-white">
+      <div className="w-full max-w-md bg-[#1e1e30] rounded-xl shadow-xl p-8 space-y-8">
+        <h1 className="text-4xl font-extrabold text-center tracking-tight text-white">
+          Sign In Here
+        </h1>
 
-            <button
-                className="border border-gray-400 px-4 py-2 rounded-md hover:bg-[#1e1e30] transition"
-                onClick={async () => {
-                    "use server";
-                    await signIn("github");
-                }}
-            >
-                Sign in with GitHub
-            </button>
+        <button
+          type="button"
+          onClick={async () => {
+            "use server";
+            await signIn("github");
+          }}
+          className="w-full flex items-center justify-center gap-3 bg-transparent border-2 border-gray-400 py-2 rounded-md hover:bg-[#1e1e30] transition-colors"
+        >
+          <Image
+            src="/github_logo.svg"
+            alt="GitHub logo"
+            width={24}
+            height={24}
+            className="opacity-90"
+          />
+          <span className="font-medium">Sign in with GitHub</span>
+        </button>
 
-            <div className="text-sm text-gray-400">or</div>
-
-            <form
-                action={async (formData: FormData) => {
-                    "use server";
-                    const email = formData.get("email");
-                    const password = formData.get("password");
-
-                    const signin = await signIn("credentials", {
-                        email,
-                        password,
-                    }).catch((error) => {
-                        console.error("Sign in error:", error);
-                        return null;
-                    });
-                    console.log(signin);
-                    if (!signin) {
-                        console.error("Sign in failed");
-                        return redirect("/sign-in");
-                    }
-                    redirect("/");
-                }}
-                className="flex flex-col gap-4 w-full max-w-xs"
-            >
-                <input
-                    name="email"
-                    placeholder="Email or username"
-                    type="text"
-                    required
-                    autoComplete="email"
-                    className="px-3 py-2 rounded bg-[#2a2942] text-white placeholder-gray-300 outline-none"
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                    autoComplete="password"
-                    className="px-3 py-2 rounded bg-[#2a2942] text-white placeholder-gray-300 outline-none"
-                />
-                <button
-                    type="submit"
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded transition"
-                >
-                    Sign in
-                </button>
-            </form>
+        <div className="flex items-center">
+          <hr className="flex-grow border-gray-600" />
+          <span className="px-2 text-sm text-gray-400">or</span>
+          <hr className="flex-grow border-gray-600" />
         </div>
-    );
+
+        <form
+          action={async (formData: FormData) => {
+            "use server";
+            const email = formData.get("email");
+            const password = formData.get("password");
+
+            const result = await signIn("credentials", { email, password }).catch(
+              (error) => {
+                console.error("Sign in error:", error);
+                return null;
+              }
+            );
+
+            if (!result) {
+              console.error("Sign in failed");
+              redirect("/sign-in");
+              return;
+            }
+
+            redirect("/");
+          }}
+          className="space-y-4"
+        >
+          <input
+            name="email"
+            type="text"
+            placeholder="Email or username"
+            required
+            autoComplete="email"
+            className="w-full px-4 py-2 bg-[#2a2942] text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+            autoComplete="current-password"
+            className="w-full px-4 py-2 bg-[#2a2942] text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          />
+          <button
+            type="submit"
+            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 rounded-md transition"
+          >
+            Sign in
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
