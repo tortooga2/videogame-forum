@@ -13,7 +13,7 @@ export default function TagTable({ tags }: { tags: Tag[] }) {
     const visibleTags = tags.filter(tag => tag.name.toLowerCase() !== "none");
 
     return (
-        <div className="bg-[#1a1c2c] text-white p-4 rounded-md shadow-md border border-gray-700">
+        <div className="p-4 rounded-md shadow-md border border-gray-700" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}>
             <h2 className="text-lg font-bold mb-3 flex gap-2 items-center"><span><FaUserTag className="text-yellow-400" /></span>All Tags</h2>
             <div className="flex flex-wrap gap-2">
                 {visibleTags.map((tag) => (

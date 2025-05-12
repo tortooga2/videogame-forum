@@ -44,7 +44,7 @@ export default function GameNewsCarousel() {
     };
 
     return (
-        <div className="bg-[#1a1c2c] border border-gray-600 text-white rounded-md shadow-md p-4">
+        <div className="border border-gray-600 rounded-md shadow-md p-4" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}>
             <h2 className="text-lg font-bold flex items-center gap-2 mb-2">
                 <FaNewspaper className="text-yellow-400" />
                 Game News
