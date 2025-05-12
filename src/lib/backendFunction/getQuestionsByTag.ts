@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
-export type QuestionWithRelations = Prisma.QuestionGetPayload<{
+export type QuestionModelWithCount = Prisma.QuestionGetPayload<{
     include: {
         poster: { select: { id: true; name: true; email: true } };
         tag: { select: { id: true; name: true; color: true } };
@@ -11,20 +11,24 @@ export type QuestionWithRelations = Prisma.QuestionGetPayload<{
     };
 }>;
 
-export async function getPosts(): Promise<QuestionWithRelations[] | null> {
-    const posts = await prisma.question.findMany({
-        orderBy: { createdAt: "desc" },
+export async function getQuestionsByTag(
+    tagId: string
+): Promise<QuestionModelWithCount[] | null> {
+    if (!tagId) {
+        console.error("Tag ID is required");
+        return null;
+    }
+    const questions = await prisma.question.findMany({
+        where: {
+            tagid: tagId,
+        },
         include: {
             poster: { select: { id: true, name: true, email: true } },
             tag: { select: { id: true, name: true, color: true } },
         },
     });
 
-    if (!posts) {
-        return null;
-    }
-
-    return posts.map((p) => ({
+    return questions.map((p) => ({
         ...p,
         title: p.title ?? "",
         description: p.description ?? "",
