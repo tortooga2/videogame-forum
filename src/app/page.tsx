@@ -25,7 +25,7 @@ export default async function Home() {
     const tags = await getTagsList();
 
     return (
-        <div className="w-full min-h-screen">
+        <div className="w-full min-h-screen" style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}>
             <Navbar
                 user={session.user?.email ? session.user.email : "Anonymous"}
             />
@@ -45,9 +45,10 @@ export default async function Home() {
                             }
                             redirect("/");
                         }}
-                        className="flex flex-col gap-4 p-4 border border-gray-600 rounded-md bg-[#1a1c2c]"
+                        className="flex flex-col gap-4 p-4 border border-gray-600 rounded-md"
+                        style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}
                     >
-                        <h1 className="text-xl font-bold text-white">
+                        <h1 className="text-xl font-bold">
                             Create Post
                         </h1>
                         <input
@@ -55,7 +56,7 @@ export default async function Home() {
                             name="title"
                             placeholder="Title"
                             required
-                            className="border-b border-gray-600 bg-transparent text-white placeholder-white outline-none p-2"
+                            className="border-b border-gray-600 bg-transparent   outline-none p-2"
                         />
                         <select id="tag" name="tagid" required>
                             <option key={"0"} value={"0"}>
@@ -71,7 +72,7 @@ export default async function Home() {
                             name="content"
                             placeholder="Content"
                             required
-                            className="h-40 resize-none border border-gray-600 rounded-md p-2 bg-transparent text-white placeholder-white"
+                            className="h-40 resize-none border border-gray-600 rounded-md p-2 bg-transparent"
                         ></textarea>
                         <button
                             type="submit"
@@ -92,9 +93,10 @@ export default async function Home() {
                 <div className="flex flex-col gap-6 h-full">
                     <GameNewsCarousel />
 
-                    <div className="bg-[#1a1c2c] text-white rounded-md shadow-md p-4 h-auto">
+                    <div className=" rounded-md shadow-md p-4 h-auto border border-gray-600" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}>
                         <h2 className="text-lg font-bold mb-2 flex gap-2 items-center">
-                            <FaTrophy className="text-yellow-400" /> Top Users This Week
+                            <FaTrophy className="text-yellow-400" /> Top Users
+                            This Week
                         </h2>
 
                         <ul className="list-disc list-inside text-sm">
@@ -109,7 +111,6 @@ export default async function Home() {
 
                     <AdBlock />
                     <TagTable tags={tags} />
-
                 </div>
             </div>
         </div>

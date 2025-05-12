@@ -16,7 +16,7 @@ const ads = [
     {
         title: "Steam Deck OLED",
         desc: "The best way to play on the go.",
-        sub: "Now with better battery life and colors.",
+        sub: "Nun better than this shi, u better get it.",
         link: "https://store.steampowered.com/steamdeck",
         image: "/ads/steamdeck.webp",
     },
@@ -50,7 +50,7 @@ export default function AdBlock() {
     const ad = ads[currentAd];
 
     return (
-        <div className="relative bg-[#1a1c2c] text-white p-4 rounded-md shadow-md border border-gray-700 overflow-hidden">
+        <div className="relative p-4 rounded-md shadow-md border border-gray-700 overflow-hidden" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}>
             <button
                 onClick={() => setHidden(true)}
                 className="absolute top-2 right-2 text-gray-400 hover:text-red-400 transition"
