@@ -10,6 +10,8 @@ import { fuzzySearch } from "@/lib/frontendFunctions/fuzzySearch";
 import TagTable from "@/app/components/TagTable";
 import PostCard from "./PostCard";
 import Answer from "./answer";
+import { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion";
+import { Answer as AnswerModel } from "@prisma/client";
 
 export default function Navbar({ user }: { user: string }) {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -102,7 +104,9 @@ export default function Navbar({ user }: { user: string }) {
                                 <span>Questions</span>
                             </h2>
                         )}
-                        {searchResults.questions.map((q) => (
+                        {(
+                            searchResults.questions as QuestionWithRelations[]
+                        ).map((q) => (
                             <PostCard key={q.id} question={q} />
                         ))}
                     </div>
@@ -112,7 +116,7 @@ export default function Navbar({ user }: { user: string }) {
                                 <span>Answers</span>
                             </h2>
                         )}
-                        {searchResults.answers.map((q) => (
+                        {(searchResults.answers as AnswerModel[]).map((q) => (
                             <Answer key={q.id} answer={q} />
                         ))}
                     </div>
