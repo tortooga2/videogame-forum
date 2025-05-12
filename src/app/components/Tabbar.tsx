@@ -2,8 +2,14 @@
 
 import { useState } from "react";
 
-export default function Tabbar({ onTabChange }: { onTabChange: (tab: string) => void }) {
-    const tabs = ["Latest", "Unanswered", "Trending", "Popular this Week", "Popular this Month"];
+type TabbarProps = {
+    onTabChange: (tab: string) => void;
+    onTagChange: (tagId: string) => void;
+    tags: { id: string; name: string }[];
+};
+
+export default function Tabbar({ onTabChange, onTagChange, tags }: TabbarProps) {
+    const tabs = ["Latest", "Unanswered", "Trending", "Popular this Week"];
     const [activeTab, setActiveTab] = useState(tabs[0]);
 
     const getUnderlineColor = (tab: string) => {
@@ -13,8 +19,8 @@ export default function Tabbar({ onTabChange }: { onTabChange: (tab: string) => 
     };
 
     return (
-        <div className="w-full  bg-[#0e0d22] box-border rounded-md px-4 py-3 overflow-x-auto border-b border-2 border-gray-600 shadow-inner">
-            <div className="flex gap-4 md:gap-6 whitespace-nowrap text-sm sm:text-base ">
+        <div className="w-full bg-[#0e0d22] box-border rounded-md px-4 py-3 overflow-x-auto border-b border-2 border-gray-600 shadow-inner flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex gap-4 md:gap-6 whitespace-nowrap text-sm sm:text-base">
                 {tabs.map((tab) => {
                     const isActive = activeTab === tab;
                     const underlineColor = getUnderlineColor(tab);
@@ -26,9 +32,9 @@ export default function Tabbar({ onTabChange }: { onTabChange: (tab: string) => 
                                 onTabChange(tab);
                                 setActiveTab(tab);
                             }}
-                            className={`pb-1 px-2 font-semibold border-b-2  transition duration-200 ${isActive
-                                    ? `text-white ${underlineColor}`
-                                    : "border-transparent text-gray-300 hover:text-[#ff4ecd]"
+                            className={`pb-1 px-2 font-semibold border-b-2 transition duration-200 ${isActive
+                                ? `text-white ${underlineColor}`
+                                : "border-transparent text-gray-300 hover:text-[#ff4ecd]"
                                 }`}
                         >
                             {tab}
@@ -36,6 +42,19 @@ export default function Tabbar({ onTabChange }: { onTabChange: (tab: string) => 
                     );
                 })}
             </div>
+
+            {/* Tag Filter Dropdown */}
+            <select
+                onChange={(e) => onTagChange(e.target.value)}
+                className="bg-[#1a1c2c] text-white border border-gray-600 rounded px-3 py-1 text-sm"
+            >
+                <option value="">All Tags</option>
+                {tags.map((tag) => (
+                    <option key={tag.id} value={tag.id}>
+                        {tag.name}
+                    </option>
+                ))}
+            </select>
         </div>
     );
 }

@@ -5,8 +5,6 @@ export type QuestionWithRelations = Prisma.QuestionGetPayload<{
     include: {
         poster: { select: { id: true; name: true; email: true } };
         tag: { select: { id: true; name: true; color: true } };
-    };
-    _count: {
         answers: true;
     };
 }>;
@@ -17,6 +15,7 @@ export async function getPosts(): Promise<QuestionWithRelations[] | null> {
         include: {
             poster: { select: { id: true, name: true, email: true } },
             tag: { select: { id: true, name: true, color: true } },
+            answers: true,
         },
     });
 
@@ -28,5 +27,5 @@ export async function getPosts(): Promise<QuestionWithRelations[] | null> {
         ...p,
         title: p.title ?? "",
         description: p.description ?? "",
-    }));
+    })) as QuestionWithRelations[];
 }

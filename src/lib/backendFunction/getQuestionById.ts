@@ -9,8 +9,21 @@ export const getQuestionById = async (
         include: {
             poster: { select: { id: true, name: true, email: true } },
             tag: { select: { id: true, name: true, color: true } },
+            answers: {
+                select: {
+                    id: true,
+                    answer: true,
+                    userId: true,
+                    questionId: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    upvotes: true,
+                    downvotes: true,
+                },
+            },
         },
     });
+
 
     if (!post) {
         return null;

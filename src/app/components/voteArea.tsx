@@ -16,7 +16,7 @@ export default function VoteArea({
 
     useEffect(() => {
         getVotes(postType, postId, setCounts, setHasVoted);
-    }, []);
+    }, [postId, postType]);
 
     return (
         <div className="flex items-center gap-4 px-4 py-2 text-white">
