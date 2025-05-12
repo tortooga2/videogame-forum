@@ -1,3 +1,5 @@
+// lib/auth.ts (Frontend-only stub)
+
 import NextAuth from "next-auth";
 import Github from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -90,3 +92,5 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         },
     },
 });
+
+

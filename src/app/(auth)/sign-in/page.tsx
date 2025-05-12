@@ -1,4 +1,3 @@
-// File: app/(auth)/sign-in/page.tsx
 import { auth, signIn } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
@@ -7,34 +6,67 @@ export default async function SignIn() {
   const session = await auth();
   if (session) redirect("/");
 
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 space-y-6">
-        <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-white">
-          Welcome Back
-        </h1>
+    return (
+        <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-4 bg-[#0e0d22] text-white">
+            <h1 className="text-3xl font-bold underline">Sign in Here!</h1>
 
-        <button
-          onClick={async () => {
-            "use server";
-            await signIn("github");
-          }}
-          className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700 transition"
-        >
-          <Image
-            src="/github_logo.svg"
-            alt="GitHub logo"
-            width={20}
-            height={20}
-            className="mr-2"
-          />
-          Sign in with GitHub
-        </button>
+            <button
+                className="border border-gray-400 px-4 py-2 rounded-md hover:bg-[#1e1e30] transition"
+                onClick={async () => {
+                    "use server";
+                    await signIn("github");
+                }}
+            >
+                Sign in with GitHub
+            </button>
 
-        <div className="flex items-center">
-          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
-          <span className="px-2 text-gray-500 dark:text-gray-400">or</span>
-          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
+            <div className="text-sm text-gray-400">or</div>
+
+            <form
+                action={async (formData: FormData) => {
+                    "use server";
+                    const email = formData.get("email");
+                    const password = formData.get("password");
+
+                    const signin = await signIn("credentials", {
+                        email,
+                        password,
+                    }).catch((error) => {
+                        console.error("Sign in error:", error);
+                        return null;
+                    });
+                    console.log(signin);
+                    if (!signin) {
+                        console.error("Sign in failed");
+                        return redirect("/sign-in");
+                    }
+                    redirect("/");
+                }}
+                className="flex flex-col gap-4 w-full max-w-xs"
+            >
+                <input
+                    name="email"
+                    placeholder="Email or username"
+                    type="text"
+                    required
+                    autoComplete="email"
+                    className="px-3 py-2 rounded bg-[#2a2942] text-white placeholder-gray-300 outline-none"
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                    autoComplete="password"
+                    className="px-3 py-2 rounded bg-[#2a2942] text-white placeholder-gray-300 outline-none"
+                />
+                <button
+                    type="submit"
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded transition"
+                >
+                    Sign in
+                </button>
+            </form>
         </div>
 
         <form

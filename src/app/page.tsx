@@ -1,132 +1,115 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { signOut } from "@/lib/auth";
 import createPost from "@/lib/backendFunction/createQuestion";
-import getAllQuestions from "@/lib/backendFunction/getAllQuestion";
+import TagTable from "./components/TagTable";
+import {
+    getPosts,
+    QuestionWithRelations,
+} from "@/lib/backendFunction/getAllQuestion";
+import Navbar from "./components/Navbar";
+import AdBlock from "./components/Ad";
+import { FaTrophy } from "react-icons/fa";
 
-import Link from "next/link";
-
-import VoteArea from "@/components/voteArea";
+import GameNewsCarousel from "./components/GameNewsCarousel";
+import getTopUsersThisWeek from "@/lib/backendFunction/getTopUsers";
+import PostFeed from "./components/PostFeed";
+import getTagsList from "@/lib/backendFunction/getTags";
 
 export default async function Home() {
     const session = await auth();
     if (!session) redirect("/sign-in");
 
-    const questions = await getAllQuestions();
+    const questions = await getPosts();
+    const topUsers = await getTopUsersThisWeek();
+
+    const tags = await getTagsList();
 
     return (
-        <div
-            style={{
-                margin: "auto",
-                maxWidth: "800px",
-                paddingTop: "2rem",
-                paddingBottom: "2rem",
-            }}
-        >
-            <div>
-                <span>{session.user?.email}</span>
-            </div>
-            <button
-                onClick={async () => {
-                    "use server";
-                    await signOut();
-                }}
-            >
-                Sign out
-            </button>
-            <form
-                action={async (formData: FormData) => {
-                    "use server";
-                    const res = await createPost(formData);
-                    if (!res) {
-                        // Handle error (e.g., show a message to the user)
-                        console.error("Post creation failed");
-                        return;
-                    }
-                    redirect("/");
-                }}
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
-                    padding: "1rem",
-                    border: "1px solid white",
-                    borderRadius: "0.5rem",
-                }}
-            >
-                <h1>New Question</h1>
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Title"
-                    required
-                    style={{
-                        borderBottom: "1px solid white",
-                    }}
-                />
-                <textarea
-                    name="content"
-                    placeholder="Content"
-                    required
-                    style={{
-                        height: "200px",
-                        resize: "none",
-                        border: "1px solid white",
-                        borderRadius: "0.5rem",
-                        padding: "0.5rem",
-                    }}
-                ></textarea>
-                <button type="submit" className="hover:bg-[#666666] w-fit p-2">
-                    Create Post
-                </button>
-            </form>
-            <h1
-                style={{
-                    fontSize: "xx-large",
-                    padding: "1rem",
-                }}
-            >
-                Posts
-            </h1>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
-                    height: "100%",
-                    overflowY: "auto",
-                }}
-            >
-                {/* Render posts here */}
-                {/* Example: posts.map(post => <Post key={post.id} post={post} />) */}
-                {questions?.map((question) => (
-                    <div
-                        key={question.id}
-                        style={{
-                            border: "1px solid white",
-                            padding: "1rem",
-                            gap: "1rem",
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "0.5rem",
+        <div className="w-full min-h-screen">
+            <Navbar
+                user={session.user?.email ? session.user.email : "Anonymous"}
+            />
+
+            {/* Main Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 py-4">
+                {/* LEFT: Create Post + Posts */}
+                <div className="md:col-span-2 space-y-6">
+                    {/* Create Post Form */}
+                    <form
+                        action={async (formData: FormData) => {
+                            "use server";
+                            const res = await createPost(formData);
+                            if (!res) {
+                                console.error("Post creation failed");
+                                return;
+                            }
+                            redirect("/");
                         }}
+                        className="flex flex-col gap-4 p-4 border border-gray-600 rounded-md bg-[#1a1c2c]"
                     >
-                        <Link href={`question/${question.id}`}>
-                            <h2
-                                style={{
-                                    fontSize: "large",
-                                    textDecoration: "underline",
-                                }}
-                            >
-                                {question.title}
-                            </h2>
-                            <p>By: {question.userId}</p>
-                            <p>Created at: {question.createdAt.toString()}</p>
-                            <p>{question.description}</p>
-                        </Link>
-                        <VoteArea postId={question.id} postType={"question"} />
+                        <h1 className="text-xl font-bold text-white">
+                            Create Post
+                        </h1>
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Title"
+                            required
+                            className="border-b border-gray-600 bg-transparent text-white placeholder-white outline-none p-2"
+                        />
+                        <select id="tag" name="tagid" required>
+                            <option key={"0"} value={"0"}>
+                                Select a tag
+                            </option>
+                            {tags.map((tag) => (
+                                <option key={tag.id} value={tag.id}>
+                                    {tag.name}
+                                </option>
+                            ))}
+                        </select>
+                        <textarea
+                            name="content"
+                            placeholder="Content"
+                            required
+                            className="h-40 resize-none border border-gray-600 rounded-md p-2 bg-transparent text-white placeholder-white"
+                        ></textarea>
+                        <button
+                            type="submit"
+                            className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded"
+                        >
+                            Submit
+                        </button>
+                    </form>
+
+                    {/* Posts List */}
+                    <PostFeed
+                        questions={questions as QuestionWithRelations[]}
+                    />
+                </div>
+
+                {/* RIGHT: Sidebar */}
+                <div className="flex flex-col gap-6 h-full">
+                    <GameNewsCarousel />
+
+                    <div className="bg-[#1a1c2c] text-white rounded-md shadow-md p-4 h-auto">
+                        <h2 className="text-lg font-bold mb-2 flex gap-2 items-center">
+                            <FaTrophy className="text-yellow-400" /> Top Users This Week
+                        </h2>
+
+                        <ul className="list-disc list-inside text-sm">
+                            {topUsers.map((user) => (
+                                <li key={user.id}>
+                                    @{user.name ?? user.email.split("@")[0]} (
+                                    {user._count.questions})
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                ))}
+
+                    <AdBlock />
+                    <TagTable tags={tags} />
+
+                </div>
             </div>
         </div>
     );
