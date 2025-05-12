@@ -1,3 +1,4 @@
+// File: app/(auth)/sign-in/page.tsx
 import { auth, signIn } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
@@ -22,7 +23,7 @@ export default async function SignIn() {
             "use server";
             await signIn("github");
           }}
-          className="w-full flex items-center justify-center gap-3 bg-transparent border-2 border-gray-400 py-2 rounded-md hover:bg-[#1e1e30] transition-colors"
+          className="w-full flex items-center justify-center gap-3 bg-transparent border-2 border-gray-400 py-2 rounded-md hover:bg-[#1e1e30] cursor-pointer transition duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500"
         >
           <Image
             src="/github_logo.svg"
@@ -81,7 +82,7 @@ export default async function SignIn() {
           />
           <button
             type="submit"
-            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 rounded-md transition"
+            className="w-full bg-cyan-500 hover:bg-cyan-600 cursor-pointer transition duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-white font-semibold py-2 rounded-md"
           >
             Sign in
           </button>
