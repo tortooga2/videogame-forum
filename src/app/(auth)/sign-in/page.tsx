@@ -1,6 +1,7 @@
 import { auth, signIn } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function SignIn() {
   const session = await auth();
@@ -86,6 +87,16 @@ export default async function SignIn() {
             Sign in
           </button>
         </form>
+
+        <div className="text-center text-sm text-gray-400">
+          Don't have an account?{" "}
+          <Link
+            href="/sign-up"
+            className="text-cyan-500 hover:underline"
+          >
+            Sign up
+          </Link>
+        </div>
       </div>
     </div>
   );
