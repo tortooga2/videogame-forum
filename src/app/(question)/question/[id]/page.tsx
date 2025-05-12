@@ -1,5 +1,8 @@
 import { getQuestionById } from "@/lib/backendFunction/getQuestionById";
-import getAnswersByQuestion from "@/lib/backendFunction/getAnswersByQuestion";
+import {
+    getAnswersByQuestion,
+    AnswerWithRelations,
+} from "@/lib/backendFunction/getAnswersByQuestion";
 import { redirect } from "next/navigation";
 import createAnswer from "@/lib/backendFunction/createAnswer";
 import { IoIosArrowDropleft } from "react-icons/io";
@@ -28,10 +31,16 @@ export default async function QuestionPage({
             </div>
         );
 
-    const answers = await getAnswersByQuestion(id);
+    const answers = (await getAnswersByQuestion(id)) as AnswerWithRelations[];
 
     return (
-        <div className="min-h-screen px-6 py-8 space-y-10" style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}>
+        <div
+            className="min-h-screen px-6 py-8 space-y-10"
+            style={{
+                backgroundColor: "var(--bg-color)",
+                color: "var(--text-color)",
+            }}
+        >
             {/* Question Section */}
             <Link
                 href="/"
@@ -41,7 +50,13 @@ export default async function QuestionPage({
                 <span className="hidden sm:inline">Back</span>
             </Link>
 
-            <div className="space-y-3 border border-gray-700 p-6 rounded-md" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}>
+            <div
+                className="space-y-3 border border-gray-700 p-6 rounded-md"
+                style={{
+                    backgroundColor: "var(--card-bg)",
+                    color: "var(--text-color)",
+                }}
+            >
                 <h1 className="text-3xl font-bold underline">
                     {question.title}
                 </h1>
@@ -66,7 +81,7 @@ export default async function QuestionPage({
                 <h2 className="text-2xl font-bold">
                     Answers ({answers.length})
                 </h2>
-                {answers.length === 0 ? (
+                {!answers || answers.length === 0 ? (
                     <p className="text-gray-400 italic">
                         No answers yet. Be the first to reply.
                     </p>
@@ -74,13 +89,19 @@ export default async function QuestionPage({
                     answers.map((answer) => (
                         <div
                             key={answer.id}
-                            className=" border border-gray-700 rounded-md p-5" style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}
+                            className=" border border-gray-700 rounded-md p-5"
+                            style={{
+                                backgroundColor: "var(--bg-color)",
+                                color: "var(--text-color)",
+                            }}
                         >
                             <div className="whitespace-pre-line">
                                 {answer.answer}
                             </div>
                             <div className="mt-4 text-sm flex justify-between items-center">
-                                <span>By: {answer.userId}</span>
+                                <span>
+                                    By: {answer.poster.email.split("@")[0]}
+                                </span>
                                 <span>
                                     {new Date(
                                         answer.createdAt
@@ -104,14 +125,22 @@ export default async function QuestionPage({
                     }
                     redirect("/question/" + id);
                 }}
-                className="flex flex-col gap-4 p-6 border border-gray-700 rounded-md  mt-10" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}
+                className="flex flex-col gap-4 p-6 border border-gray-700 rounded-md  mt-10"
+                style={{
+                    backgroundColor: "var(--card-bg)",
+                    color: "var(--text-color)",
+                }}
             >
                 <h2 className="text-xl font-semibold">Your Answer</h2>
                 <textarea
                     name="content"
                     placeholder="Write your answer here..."
                     required
-                    className="h-40 resize-none border border-gray-600 rounded-md p-3 placeholder-gray-400 outline-none" style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}
+                    className="h-40 resize-none border border-gray-600 rounded-md p-3 placeholder-gray-400 outline-none"
+                    style={{
+                        backgroundColor: "var(--bg-color)",
+                        color: "var(--text-color)",
+                    }}
                 ></textarea>
                 <button
                     type="submit"
