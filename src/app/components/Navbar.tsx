@@ -10,8 +10,9 @@ import TagTable from "@/app/components/TagTable";
 import PostCard from "./PostCard";
 import Answer from "./answer";
 import { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion";
-import { Answer as AnswerModel } from "@prisma/client";
+
 import useTheme from "@/lib/frontendFunctions/useTheme";
+import { AnswerWithRelations } from "@/lib/backendFunction/getAnswersByQuestion";
 export default function Navbar({ user }: { user: string }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -133,9 +134,11 @@ export default function Navbar({ user }: { user: string }) {
                                 <span>Answers</span>
                             </h2>
                         )}
-                        {(searchResults.answers as AnswerModel[]).map((q) => (
-                            <Answer key={q.id} answer={q} />
-                        ))}
+                        {(searchResults.answers as AnswerWithRelations[]).map(
+                            (q) => (
+                                <Answer key={q.id} answer={q} />
+                            )
+                        )}
                     </div>
                 </div>
             )}
