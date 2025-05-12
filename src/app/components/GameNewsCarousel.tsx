@@ -46,7 +46,7 @@ export default function GameNewsCarousel() {
             </h2>
             <Slider {...settings}>
                 {news.map((item, index) => (
-                    <div key={index} className="relative =">
+                    <div key={index} className="relative ">
                         <Image
                             src={item.image}
                             alt={item.title}
