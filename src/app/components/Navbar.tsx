@@ -65,11 +65,19 @@ export default function Navbar({ user }: { user: string }) {
                             color: "var(--text-color)",
                         }}
                     >
-                        <img
-                            src={avatarUrl}
-                            alt="User Avatar"
-                            className="w-8 h-8 rounded-full object-cover"
-                        />
+                        {!avatarUrl ? (
+                            <FaUserCircle className="text-2xl" />
+                        ) : (
+                            <img
+                                src={avatarUrl}
+                                alt="User Avatar"
+                                className="w-8 h-8 rounded-full object-cover"
+                                onError={(e) => {
+                                    (e.currentTarget.style.display = "none");
+                                    // Optional: Add a fallback state if you want to render FaUserCircle in place
+                                }}
+                            />
+                        )}
                         <span className="hidden md:inline text-sm">
                             {user.split("@")[0]}
                         </span>
