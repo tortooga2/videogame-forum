@@ -4,12 +4,17 @@ import { QuestionWithRelations } from "@/lib/backendFunction/getAllQuestion";
 
 import PostCard from "@/app/components/PostCard";
 
-export default async function TagPage({ params }: { params: { id: string } }) {
-    const tagId = params.id;
-    const tag = await getTagById(tagId);
-    const questions = (await getQuestionsByTag(
-        tagId
-    )) as QuestionWithRelations[];
+export default async function TagPage({
+    params,
+}: {
+    params: Promise<{ id: string }>;
+}) {
+    const { id } = await params;
+    if (!id) {
+        return <div>Tag not found</div>;
+    }
+    const tag = await getTagById(id);
+    const questions = (await getQuestionsByTag(id)) as QuestionWithRelations[];
 
     if (!tag) {
         return <div>Tag not found</div>;
