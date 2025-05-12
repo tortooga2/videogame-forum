@@ -1,16 +1,18 @@
 import prisma from "@/lib/prisma";
-import type { Prisma } from "@prisma/client";
 
-export type QuestionWithRelations = Prisma.QuestionGetPayload<{
-    include: {
-        poster: { select: { id: true; name: true; email: true } };
-        tag: { select: { id: true; name: true; color: true } };
-        answers: true;
-    };
-}>;
+import { QuestionWithRelations } from "./getAllQuestion";
 
-export async function getPosts(): Promise<QuestionWithRelations[] | null> {
+export async function getQuestionsByTag(
+    tagId: string
+): Promise<QuestionWithRelations[] | null> {
+    if (!tagId) {
+        console.error("Tag ID is required");
+        return null;
+    }
     const posts = await prisma.question.findMany({
+        where: {
+            tagid: tagId,
+        },
         orderBy: { createdAt: "desc" },
         include: {
             poster: { select: { id: true, name: true, email: true } },
