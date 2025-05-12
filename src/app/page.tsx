@@ -94,7 +94,8 @@ export default async function Home() {
 
                     <div className="bg-[#1a1c2c] text-white rounded-md shadow-md p-4 h-auto">
                         <h2 className="text-lg font-bold mb-2 flex gap-2 items-center">
-                            <FaTrophy className="text-yellow-400" /> Top Users This Week
+                            <FaTrophy className="text-yellow-400" /> Top Users
+                            This Week
                         </h2>
 
                         <ul className="list-disc list-inside text-sm">
@@ -109,7 +110,6 @@ export default async function Home() {
 
                     <AdBlock />
                     <TagTable tags={tags} />
-
                 </div>
             </div>
         </div>
